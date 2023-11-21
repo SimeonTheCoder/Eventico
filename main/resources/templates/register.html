@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <div class="form-div">
+        <div class="form-content">
+            <h1>
+                Register
+            </h1>
+
+            <div class="form-container">
+                <form th:action="@{/login}" class="form-4">
+                    <label>Username:</label>
+                    <input type="text" name="username">
+
+                    <label>Email:</label>
+                    <input type="email" name="email">
+
+                    <label>Password:</label>
+                    <input type="password" name="password">
+
+                    <label>Repeat password:</label>
+                    <input type="password" name="repeat">
+
+                    <input type="submit" value="Register" class="btn">
+                </form>
+            </div>
+        </div>
+
+        <h1 class="big-text">
+            Thank you <br> for joining Eventico!
+        </h1>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:replace="~{fragments/common::head}"></head>
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <h1>
+        Rewards
+    </h1>
+
+    <p>
+        Spin the wheel of fortune to win rewards!
+    </p>
+
+    <form th:action="@{/rewards}">
+        <input type="submit" value="Spin!">
+    </form>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+</html>

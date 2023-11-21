@@ -1,0 +1,189 @@
+body {
+    padding-top: 60px;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+    padding: 20px;
+}
+
+p {
+    padding: 20px;
+}
+
+input {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+nav {
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 20px;
+
+    /* background-color: green; */
+    background: linear-gradient(45deg, green, #a2a200);
+    color: white;
+
+    position: fixed;
+    top: 10px;
+    width: 96%;
+}
+
+a {
+    padding: 20px;
+
+    text-decoration: none;
+}
+
+nav a {
+    color: white;
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+
+    grid-gap: 20px;
+
+    margin: 20px;
+
+    box-shadow: #00000036 0px 0px 200px 0px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: transparent;
+}
+
+.form-4 {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto auto auto;
+
+    grid-gap: 20px;
+
+    width: 100%;
+
+    margin: 20px;
+}
+
+.form-div {
+    padding: 20px;
+
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    margin: 20px;
+    margin-top: 60px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(90deg, lightgreen, transparent);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    box-shadow: #00000052 0px 0px 50px 0px;
+}
+
+.btn {
+    background-color: green;
+    color: white;
+    font-weight: 800;
+}
+
+.form-content {
+    width: 800px;
+}
+
+.content-container {
+    width: 800px;
+}
+
+img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card {
+    background: linear-gradient(180deg, white, transparent);
+    box-shadow: #00000091 0px 0px 200px 0px;
+
+    border-radius: 0px 0px 20px 20px;
+
+    transition: background 0.5s;
+}
+
+.card:hover {
+    background: white;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+
+    width: 1200px;
+    margin: auto;
+}
+
+.coming-events-container {
+    padding: 20px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    background: linear-gradient(359deg, lightgreen, transparent);
+    margin: 40px;
+    border-radius: 20px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.container-image {
+    width: 300px;
+    transition: width 0.2s;
+}
+
+.container-image:hover {
+    width: 450px;
+}
+
+.event-listing {
+    display: flex;
+    justify-content: space-between;
+
+    background: linear-gradient(90deg, white, transparent);
+    box-shadow: #0000004a 0px 0px 200px 0px;
+
+    margin: 20px;
+
+    border-radius: 20px;
+}
+
+.buy-section {
+    padding: 40px;
+    display: flex;
+    width: 130px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.event-card { 
+    background: white;
+    margin-top: -32px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: #6f6f6f 0px 0px 50px 0px;
+}

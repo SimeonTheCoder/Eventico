@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head th:replace="~{fragments/common::head}"></head>
+</head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <div class="event-listing">
+        <div class="container-image">
+            <img src="img/test.jpg">
+        </div>
+
+        <div class="listing-content">
+            <h1>
+                <a th:href="@{/event-info}">Event title</a>
+            </h1>
+            <p>
+                Event description
+            </p>
+        </div>
+
+        <div class="buy-section">
+            <h2>20 points</h2>
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        </div>
+    </div>
+
+    <div class="event-listing">
+        <div class="container-image">
+            <img src="img/test.jpg">
+        </div>
+
+        <div class="listing-content">
+            <h1>
+                <a th:href="@{/event-info}">Event title</a>
+            </h1>
+            <p>
+                Event description
+            </p>
+        </div>
+
+        <div class="buy-section">
+            <h2>20 points</h2>
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        </div>
+    </div>
+
+    <div class="event-listing">
+        <div class="container-image">
+            <img src="img/test.jpg">
+        </div>
+
+        <div class="listing-content">
+            <h1>
+                <a th:href="@{/event-info}">Event title</a>
+            </h1>
+            <p>
+                Event description
+            </p>
+        </div>
+
+        <div class="buy-section">
+            <h2>20 points</h2>
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

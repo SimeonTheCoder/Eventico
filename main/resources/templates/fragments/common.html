@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div style="color: yellow; font-weight: 900; font-size: 25px;">
+                Eventico
+            </div>
+
+            <div>
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/login}">Login</a>
+                <a th:href="@{/register}">Register</a>
+                <a th:href="@{/redeem}">Redeem points</a>
+                <a th:href="@{/rewards}">Rewards</a>
+            </div>
+
+            <div>
+                <a th:href="@{/account}">TCoder | 12 points</a>
+            </div>
+        </nav>
+    </header>
+
+    <footer>
+        <div style="color: yellow; background-color: black; padding: 20px; border-radius: 20px; font-weight: 900; font-size: 25px;">
+            © Eventico 2023
+        </div>
+    </footer>
+</body>
+
+</html>

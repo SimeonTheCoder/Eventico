@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <div class="coming-events-container">
+        <div class="center">
+            <h1>Your upcoming events</h1>
+        </div>
+
+        <div class="card-container">
+            <div class="card">
+                <img src="img/test.jpg">
+                <h1>
+                    Event 1 title
+                </h1>
+                <p>
+                    Event 1 description
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="img/test.jpg">
+                <h1>
+                    Event 2 title
+                </h1>
+                <p>
+                    Event 2 description
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="img/test.jpg">
+                <h1>
+                    Event 3 title
+                </h1>
+                <p>
+                    Event 3 description
+                </p>
+            </div>
+        </div>
+
+        <div class="center">
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Browse events" class="btn"></a>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>
