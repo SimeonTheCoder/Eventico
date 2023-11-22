@@ -13,7 +13,7 @@
             </h1>
 
             <div class="form-container">
-                <form th:action="@{/login}" class="form-4">
+                <form th:method="POST" th:action="@{/register}" class="form-4">
                     <label>Username:</label>
                     <input type="text" name="username">
 
@@ -25,6 +25,13 @@
 
                     <label>Repeat password:</label>
                     <input type="password" name="repeat">
+
+                    <label>Your role:</label>
+                    <select id="role" name="role">
+                        <option value="">Select role</option>
+                        <option value="USER">User</option>
+                        <option value="CREATOR">Creator</option>
+                    </select>
 
                     <input type="submit" value="Register" class="btn">
                 </form>

@@ -1,5 +1,7 @@
 package com.eventico.service;
 
-public interface UserService {
+import com.eventico.model.dto.UserRegisterBinding;
 
+public interface UserService {
+    public boolean register(UserRegisterBinding binding);
 }

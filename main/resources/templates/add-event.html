@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <h1>
+        Add event
+    </h1>
+
+    <form th:method="POST" th:action="@{/add-event}">
+        <label>Event name:</label>
+        <input type="text" id="name" name="name">
+
+        <label>Event description:</label>
+        <input type="text" id="description" name="description">
+
+        <label>Start: </label>
+        <input type="datetime-local" id="start" name="start">
+
+        <label>End: </label>
+        <input type="datetime-local" id="end" name="end">
+
+        <label>Event image: </label>
+        <input type="file" id="myFile" name="filename">
+
+        <input type="submit" value="Add event!" class="btn">
+    </form>
+</body>
+
+</html>

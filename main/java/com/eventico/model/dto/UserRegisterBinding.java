@@ -1,15 +1,16 @@
-package com.eventico.model.entity;
+package com.eventico.model.dto;
 
 import com.eventico.model.enums.UserRoles;
-import jakarta.persistence.*;
+import com.eventico.service.UserService;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
+public class UserRegisterBinding {
+    private final UserService userService;
 
-@Entity
-@Table(name = "users")
-public class User extends BaseEntity{
     @Column(unique = true, nullable = false)
     @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     private String username;
@@ -25,14 +26,9 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private UserRoles role;
 
-    @Column(nullable = false)
-    private int points;
-
-    @OneToMany(mappedBy = "addedBy")
-    private List<Event> addedEvents;
-
-    @ManyToMany(mappedBy = "participants")
-    private List<Event> participationEvents;
+    public UserRegisterBinding(UserService userService) {
+        this.userService = userService;
+    }
 
     public String getUsername() {
         return username;
@@ -64,29 +60,5 @@ public class User extends BaseEntity{
 
     public void setRole(UserRoles role) {
         this.role = role;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public List<Event> getAddedEvents() {
-        return addedEvents;
-    }
-
-    public void setAddedEvents(List<Event> addedEvents) {
-        this.addedEvents = addedEvents;
-    }
-
-    public List<Event> getParticipationEvents() {
-        return participationEvents;
-    }
-
-    public void setParticipationEvents(List<Event> participationEvents) {
-        this.participationEvents = participationEvents;
     }
 }

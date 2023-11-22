@@ -187,3 +187,8 @@ img {
     border-radius: 20px;
     box-shadow: #6f6f6f 0px 0px 50px 0px;
 }
+
+select {
+    padding: 20px;
+    border-radius: 20px;
+}
