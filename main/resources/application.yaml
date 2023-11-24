@@ -12,10 +12,9 @@ spring:
       filter:
         enabled: 'true'
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
     password: '1234'
     username: 'root'
-    url: jdbc:mysql://localhost:3306/eventico?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/eventico?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
   thymeleaf:
     cache: false
     mode: HTML

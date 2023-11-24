@@ -10,7 +10,7 @@
         Add event
     </h1>
 
-    <form th:method="POST" th:action="@{/add-event}">
+    <form th:method="POST" th:action="@{/add-event}" enctype="multipart/form-data">
         <label>Event name:</label>
         <input type="text" id="name" name="name">
 
@@ -25,6 +25,23 @@
 
         <label>Event image: </label>
         <input type="file" id="myFile" name="filename">
+
+        <label>Event location: </label>
+        <input type="text" id="text" name="location">
+
+        <label>Event category:</label>
+        <select id="category" name="category">
+            <option value="">Select category</option>
+            <option value="SPORT">SPORT</option>
+            <option value="MUSIC">MUSIC</option>
+            <option value="THEATRE">THEATRE</option>
+            <option value="SCIENCE">SCIENCE</option>
+            <option value="CHARITY">CHARITY</option>
+            <option value="GAMING">GAMING</option>
+            <option value="ART">ART</option>
+            <option value="MUSEUMS">MUSEUMS</option>,
+            <option value="COMPETITION">COMPETITION</option>
+        </select>
 
         <input type="submit" value="Add event!" class="btn">
     </form>

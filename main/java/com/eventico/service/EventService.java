@@ -1,5 +1,7 @@
 package com.eventico.service;
 
-public interface EventService {
+import com.eventico.model.dto.EventAddBinding;
 
+public interface EventService {
+    public boolean addEvent(EventAddBinding binding);
 }

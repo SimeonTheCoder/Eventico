@@ -1,14 +1,14 @@
-package com.eventico.model.entity;
+package com.eventico.model.dto;
 
 import com.eventico.model.enums.EventCategory;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Entity
-@Table(name = "events")
-public class Event extends BaseEntity{
+public class EventAddBinding {
     @Column(nullable = false)
     private String name;
 
@@ -28,16 +28,7 @@ public class Event extends BaseEntity{
     @Column(nullable = false)
     private String location;
 
-    @Lob
-    @Column(nullable = false, columnDefinition="LONGBLOB")
-    private byte[] image;
-
-    @ManyToOne
-    @JoinColumn(name = "added_by_id", nullable = false)
-    private User addedBy;
-
-    @ManyToMany
-    private List<User> participants;
+    MultipartFile filename;
 
     public String getName() {
         return name;
@@ -45,6 +36,14 @@ public class Event extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public EventCategory getCategory() {
@@ -71,43 +70,19 @@ public class Event extends BaseEntity{
         this.end = end;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public User getAddedBy() {
-        return addedBy;
-    }
-
-    public void setAddedBy(User addedBy) {
-        this.addedBy = addedBy;
-    }
-
-    public List<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<User> participants) {
-        this.participants = participants;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getLocation() {
         return location;
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public MultipartFile getFilename() {
+        return filename;
+    }
+
+    public void setFilename(MultipartFile filename) {
+        this.filename = filename;
     }
 }

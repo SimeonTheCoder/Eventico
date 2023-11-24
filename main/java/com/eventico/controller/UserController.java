@@ -1,5 +1,6 @@
 package com.eventico.controller;
 
+import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
 import com.eventico.service.EventService;
 import com.eventico.service.UserService;
@@ -22,12 +23,16 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ModelAndView loginPage() {
+    public ModelAndView loginPage(@ModelAttribute("userLoginBindingModel") UserLoginBinding userLoginBindingModel) {
         return new ModelAndView("/login");
     }
 
     @PostMapping("/login")
-    public String loginForm() {
+    public String loginForm(@ModelAttribute("userRegisterBindingModel") @Valid UserLoginBinding userLoginBindingModel, BindingResult bindingResult) {
+        boolean result = userService.login(userLoginBindingModel);
+
+        System.out.println(result ? "Success" : "Error");
+
         return "redirect:/home";
     }
 

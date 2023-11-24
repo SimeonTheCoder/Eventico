@@ -18,6 +18,9 @@ public class UserRegisterBinding {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String repeat;
+
     @Email
     @Column(unique = true, nullable = false)
     private String email;
@@ -60,5 +63,17 @@ public class UserRegisterBinding {
 
     public void setRole(UserRoles role) {
         this.role = role;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public String getRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
     }
 }

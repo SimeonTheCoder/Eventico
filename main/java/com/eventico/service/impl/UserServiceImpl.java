@@ -1,5 +1,6 @@
 package com.eventico.service.impl;
 
+import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
 import com.eventico.model.entity.User;
 import com.eventico.repo.EventRepository;
@@ -16,14 +17,20 @@ public class UserServiceImpl implements UserService {
     private final EventRepository eventRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, EventRepository eventRepository, PasswordEncoder passwordEncoder) {
+    private final LoggedUser loggedUser;
+
+    public UserServiceImpl(UserRepository userRepository, EventRepository eventRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loggedUser = loggedUser;
     }
 
     @Override
     public boolean register(UserRegisterBinding binding) {
+        if(!binding.getPassword().equals(binding.getRepeat())) return false;
+        if(userRepository.findByUsername(binding.getUsername()) != null) return false;
+
         User user = new User();
 
         user.setUsername(binding.getUsername());
@@ -38,11 +45,18 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        System.out.println(binding.getUsername());
-        System.out.println(binding.getPassword());
-        System.out.println(binding.getEmail());
-        System.out.println(binding.getRole());
+        return true;
+    }
 
-        return false;
+    @Override
+    public boolean login(UserLoginBinding binding) {
+        User user = userRepository.findByUsername(binding.getUsername());
+
+        if(user == null) return false;
+        if (!passwordEncoder.matches(binding.getPassword(), user.getPassword())) return false;
+
+        loggedUser.login(user.getUsername());
+
+        return true;
     }
 }

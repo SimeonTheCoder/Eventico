@@ -8,5 +8,5 @@ public enum EventCategory {
     CHARITY,
     GAMING,
     ART,
-    MUSEUMS
+    COMPETITION
 }
