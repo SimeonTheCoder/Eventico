@@ -12,6 +12,10 @@
                 Log in
             </h1>
 
+            <p>
+                <a th:href="@{/register}">Register</a> if you don't have an account.
+            </p>
+
             <div class="form-container">
                 <form th:method="POST" th:action="@{/login}">
                     <label>Username:</label>

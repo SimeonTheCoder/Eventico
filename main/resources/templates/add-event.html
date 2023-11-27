@@ -10,12 +10,15 @@
         Add event
     </h1>
 
-    <form th:method="POST" th:action="@{/add-event}" enctype="multipart/form-data">
+    <form style="box-shadow: #0000003d 0px 0px 200px 0px;" th:method="POST" th:action="@{/add-event}" enctype="multipart/form-data">
         <label>Event name:</label>
         <input type="text" id="name" name="name">
 
         <label>Event description:</label>
         <input type="text" id="description" name="description">
+
+        <label>Event cost:</label>
+        <input type="text" id="cost" name="cost">
 
         <label>Start: </label>
         <input type="datetime-local" id="start" name="start">

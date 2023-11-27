@@ -9,63 +9,79 @@
 <body>
     <header th:replace="~{fragments/common::nav}"></header>
 
-    <div class="event-listing">
-        <div class="container-image">
-            <img src="img/test.jpg">
+    <form style="box-shadow: #016100 0px 0px 200px 0px;" th:method="POST" th:action="@{/browse}" class="tag-form">
+        <input type="submit"
+            style="font-size: 40px; padding: 0px; border-color: transparent; box-shadow: rgba(0, 0, 0, 0.118) 0px 0px 50px 0px;"
+            value="🔁">
+        <div>
+            <label>ALL</label>
+            <input type="checkbox" name="all">
         </div>
-
-        <div class="listing-content">
-            <h1>
-                <a th:href="@{/event-info}">Event title</a>
-            </h1>
-            <p>
-                Event description
-            </p>
+        <div>
+            <label>ART</label>
+            <input type="checkbox" name="art">
         </div>
-
-        <div class="buy-section">
-            <h2>20 points</h2>
-            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        <div>
+            <label>CHARITY</label>
+            <input type="checkbox" name="charity">
         </div>
-    </div>
-
-    <div class="event-listing">
-        <div class="container-image">
-            <img src="img/test.jpg">
+        <div>
+            <label>COMPETITION</label>
+            <input type="checkbox" name="competition">
         </div>
-
-        <div class="listing-content">
-            <h1>
-                <a th:href="@{/event-info}">Event title</a>
-            </h1>
-            <p>
-                Event description
-            </p>
+        <div>
+            <label>GAMING</label>
+            <input type="checkbox" name="gaming">
         </div>
-
-        <div class="buy-section">
-            <h2>20 points</h2>
-            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        <div>
+            <label>MUSIC</label>
+            <input type="checkbox" name="music">
         </div>
-    </div>
-
-    <div class="event-listing">
-        <div class="container-image">
-            <img src="img/test.jpg">
+        <div>
+            <label>SCIENCE</label>
+            <input type="checkbox" name="science">
         </div>
-
-        <div class="listing-content">
-            <h1>
-                <a th:href="@{/event-info}">Event title</a>
-            </h1>
-            <p>
-                Event description
-            </p>
+        <div>
+            <label>SPORT</label>
+            <input type="checkbox" name="sport">
         </div>
+        <div>
+            <label>THEATRE</label>
+            <input type="checkbox" name="theatre">
+        </div>
+    </form>
 
-        <div class="buy-section">
-            <h2>20 points</h2>
-            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+    <div th:each="currEvent : ${events.events}">
+        <div th:if="(${currEvent.category==events.enums[0]} and ${events.filters[0]}) OR
+        (${currEvent.category==events.enums[1]} and ${events.filters[1]}) OR
+        (${currEvent.category==events.enums[2]} and ${events.filters[2]}) OR
+        (${currEvent.category==events.enums[3]} and ${events.filters[3]}) OR
+        (${currEvent.category==events.enums[4]} and ${events.filters[4]}) OR
+        (${currEvent.category==events.enums[5]} and ${events.filters[5]}) OR
+        (${currEvent.category==events.enums[6]} and ${events.filters[6]}) OR
+        (${currEvent.category==events.enums[7]} and ${events.filters[7]}) OR
+        (${events.filters[8]})" class="event-listing">
+            <div class="container-image">
+                <img th:src="@{/images/{id}(id=${currEvent.id})}" alt="Image">
+            </div>
+
+            <div class="listing-content">
+                <h1>
+                    <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a>
+                </h1>
+                <p>
+                    <span th:text="${currEvent.category}"></span>
+                </p>
+                <p>
+                    <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>
+                </p>
+            </div>
+
+            <div class="buy-section">
+                <h2><span th:text="${currEvent.cost}"></span> points</h2>
+                <a th:href="@{/enroll/{id}(id=${currEvent.id})}"><input style="margin-top: 40px;" type="button"
+                        value="Enroll" class="btn"></a>
+            </div>
         </div>
     </div>
 

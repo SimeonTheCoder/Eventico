@@ -4,6 +4,7 @@ import com.eventico.model.enums.EventCategory;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,9 @@ public class Event extends BaseEntity{
     @Column(nullable = false)
     private String location;
 
+    @Column(nullable = false)
+    private int cost;
+
     @Lob
     @Column(nullable = false, columnDefinition="LONGBLOB")
     private byte[] image;
@@ -36,8 +40,12 @@ public class Event extends BaseEntity{
     @JoinColumn(name = "added_by_id", nullable = false)
     private User addedBy;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> participants;
+
+    public Event() {
+        participants = new ArrayList<>();
+    }
 
     public String getName() {
         return name;
@@ -109,5 +117,13 @@ public class Event extends BaseEntity{
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }

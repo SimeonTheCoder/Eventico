@@ -9,6 +9,8 @@ public class LoggedUser {
     private String username;
     private boolean isLogged;
 
+    private boolean isCreator;
+
     public LoggedUser() {
         isLogged = false;
     }
@@ -29,6 +31,14 @@ public class LoggedUser {
         isLogged = logged;
     }
 
+    public boolean isCreator() {
+        return isCreator;
+    }
+
+    public void setCreator(boolean creator) {
+        this.isCreator = creator;
+    }
+
     public void login(String username) {
         this.username = username;
         this.isLogged = true;
@@ -37,5 +47,6 @@ public class LoggedUser {
     public void logout() {
         this.username = null;
         this.isLogged = false;
+        this.isCreator = false;
     }
 }

@@ -15,6 +15,9 @@ public class EventAddBinding {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false)
+    private int cost;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EventCategory category;
@@ -84,5 +87,13 @@ public class EventAddBinding {
 
     public void setFilename(MultipartFile filename) {
         this.filename = filename;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }

@@ -7,8 +7,17 @@
     <header th:replace="~{fragments/common::nav}"></header>
 
     <h1>
-        Your account
+        <span th:text="${user.username}"/>
     </h1>
+
+    <p>
+        Email: <span th:text="${user.email}"/> <br>
+        <span th:text="${user.points}"/> points
+    </p>
+
+    <form th:method="POST" th:action="@{/logout}">
+        <input type="submit" value="Log out">
+    </form> 
 
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>

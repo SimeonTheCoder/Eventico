@@ -112,6 +112,10 @@ img {
     object-fit: cover;
 }
 
+.container-image img {
+    height: 100%;
+}
+
 .card {
     background: linear-gradient(180deg, white, transparent);
     box-shadow: #00000091 0px 0px 200px 0px;
@@ -132,6 +136,7 @@ img {
 
     width: 1200px;
     margin: auto;
+    justify-content: center;
 }
 
 .coming-events-container {
@@ -151,6 +156,7 @@ img {
 
 .container-image {
     width: 300px;
+    height: 300px;
     transition: width 0.2s;
 }
 
@@ -191,4 +197,27 @@ img {
 select {
     padding: 20px;
     border-radius: 20px;
+}
+
+.tag-form {
+    display: flex;
+}
+
+.tag-form div {
+    padding: 20px;
+    background-color: green;
+    border-radius: 20px;
+    color: white;
+}
+
+.listing-content {
+    width: 800px;
+}
+
+#redeem-btn {
+    color: white;
+    border: 0px;
+    font-size: 20px;
+    background: green;
+    box-shadow: green 0px 0px 20px 0px;
 }

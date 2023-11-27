@@ -2,8 +2,10 @@ package com.eventico.controller;
 
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
+import com.eventico.repo.UserRepository;
 import com.eventico.service.EventService;
 import com.eventico.service.UserService;
+import com.eventico.service.impl.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,12 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
+    private final LoggedUser loggedUser;
     private final UserService userService;
     private final EventService eventsService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService, EventService eventsService) {
+    public UserController(LoggedUser loggedUser, UserService userService, EventService eventsService, UserRepository userRepository) {
+        this.loggedUser = loggedUser;
         this.userService = userService;
         this.eventsService = eventsService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/login")
@@ -49,6 +55,12 @@ public class UserController {
 
     @GetMapping("/account")
     public ModelAndView accountPage() {
-        return new ModelAndView("/account");
+        return new ModelAndView("/account", "user", userRepository.findByUsername(loggedUser.getUsername()));
+    }
+
+    @PostMapping("/logout")
+    public String logout() {
+        loggedUser.logout();
+        return "redirect:/login";
     }
 }

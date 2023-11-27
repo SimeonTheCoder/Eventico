@@ -3,6 +3,7 @@ package com.eventico.service.impl;
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
 import com.eventico.model.entity.User;
+import com.eventico.model.enums.UserRoles;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.UserService;
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(binding.getPassword(), user.getPassword())) return false;
 
         loggedUser.login(user.getUsername());
+        loggedUser.setCreator(user.getRole() == UserRoles.CREATOR);
 
         return true;
     }

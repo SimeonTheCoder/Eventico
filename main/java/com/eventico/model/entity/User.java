@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,8 +32,13 @@ public class User extends BaseEntity{
     @OneToMany(mappedBy = "addedBy")
     private List<Event> addedEvents;
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Event> participationEvents;
+
+    public User() {
+        participationEvents = new ArrayList<>();
+        addedEvents = new ArrayList<>();
+    }
 
     public String getUsername() {
         return username;

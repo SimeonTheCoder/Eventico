@@ -15,19 +15,26 @@
     <header>
         <nav>
             <div style="color: yellow; font-weight: 900; font-size: 25px;">
-                Eventico
+                <a th:unless="${@loggedUser.logged}" th:href="@{/}" style="color: yellow; font-weight: 900; font-size: 25px;">Eventico</a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/home}" style="color: yellow; font-weight: 900; font-size: 25px;">Eventico</a>
             </div>
 
             <div>
-                <a th:href="@{/home}">Home</a>
-                <a th:href="@{/login}">Login</a>
-                <a th:href="@{/register}">Register</a>
-                <a th:href="@{/redeem}">Redeem points</a>
-                <a th:href="@{/rewards}">Rewards</a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/home}">Home</a>
+                <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Home</a>
+                <a th:href="@{/browse}">Browse</a>
+                <a th:if="${@loggedUser.creator}" th:href="@{/add-event}">Host event</a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/redeem}">Redeem points</a>
+                <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Redeem points</a>
             </div>
 
             <div>
-                <a th:href="@{/account}">TCoder | 12 points</a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/account}">
+                    <span th:text="${@loggedUser.username}"/>
+                </a>
+                <div th:unless="${@loggedUser.logged}">
+                    <a th:href="@{/login}">Login</a>
+                </div>
             </div>
         </nav>
     </header>

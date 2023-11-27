@@ -7,19 +7,23 @@
     <header th:replace="~{fragments/common::nav}"></header>
 
     <div class="info-image">
-        <img src="img/test.jpg">
+        <img th:src="@{/images/{id}(id=${event.id})}" alt="Image">
     </div>
 
     <div class="event-card">
         <h1>
-            Event title
+            <span th:text="${event.name}"></span>
         </h1>
 
         <p>
-            Event info
+            <span th:text="${event.description}"></span>
         </p>
 
-        <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Buy" class="btn"></a>
+        <p>
+            Cost: <span th:text="${event.cost}"></span>
+        </p>
+
+        <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Enroll" class="btn"></a>
     </div>
 
     <footer th:replace="~{fragments/common::footer}"></footer>

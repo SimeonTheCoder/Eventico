@@ -14,12 +14,12 @@
         Redeem code to gain points
     </p>
 
-    <form th:action="@{/}">
+    <form th:method="POST" th:action="@{/redeem}">
         <label>Code: </label>
         <input type="text" name="code">
         <br>
 
-        <input type="submit" value="Redeem code">
+        <input type="submit" value="Redeem code" id="redeem-btn">
     </form>
 
     <footer th:replace="~{fragments/common::footer}"></footer>

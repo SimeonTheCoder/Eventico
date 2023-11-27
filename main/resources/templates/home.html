@@ -11,34 +11,14 @@
             <h1>Your upcoming events</h1>
         </div>
 
-        <div class="card-container">
+        <div th:each="currEvent : ${upcomingEvents}" class="card-container">
             <div class="card">
                 <img src="img/test.jpg">
                 <h1>
-                    Event 1 title
+                    <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a>
                 </h1>
                 <p>
-                    Event 1 description
-                </p>
-            </div>
-
-            <div class="card">
-                <img src="img/test.jpg">
-                <h1>
-                    Event 2 title
-                </h1>
-                <p>
-                    Event 2 description
-                </p>
-            </div>
-
-            <div class="card">
-                <img src="img/test.jpg">
-                <h1>
-                    Event 3 title
-                </h1>
-                <p>
-                    Event 3 description
+                    <span th:text="${currEvent.description}"></span>
                 </p>
             </div>
         </div>
