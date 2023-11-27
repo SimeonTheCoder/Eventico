@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
@@ -17,4 +18,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("update Event e set e.participants = ?1 where e.id = ?2")
     int updateParticipantsById(List<User> participants, Long id);
 
+    void deleteById(Long id);
 }

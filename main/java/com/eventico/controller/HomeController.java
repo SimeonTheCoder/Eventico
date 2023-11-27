@@ -31,6 +31,11 @@ public class HomeController {
         return new ModelAndView("browse", "events", eventService.getHomeData());
     }
 
+    @GetMapping("/manage")
+    public ModelAndView managePage() {
+        return new ModelAndView("manage", "events", eventService.getUserEvents());
+    }
+
     @PostMapping("/browse")
     public String filterSearch(@ModelAttribute("browseSelectionFilterBindingModel") @Valid BrowseSelectionFilterBinding browseSelectionFilterBinding, BindingResult bindingResult) {
         eventService.filterSearch(browseSelectionFilterBinding);

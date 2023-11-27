@@ -29,7 +29,7 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private int points;
 
-    @OneToMany(mappedBy = "addedBy")
+    @OneToMany(mappedBy = "addedBy", fetch = FetchType.EAGER)
     private List<Event> addedEvents;
 
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)

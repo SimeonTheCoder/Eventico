@@ -76,12 +76,12 @@ public class EventServiceImpl implements EventService {
     public boolean enroll(Long id) {
         Event event = eventRepository.findById(id).orElse(null);
 
-        if(event == null) return false;
-        if(loggedUser == null) return false;
+        if (event == null) return false;
+        if (loggedUser == null) return false;
 
         User user = userRepository.findByUsername(loggedUser.getUsername());
 
-        if(user.getPoints() < event.getCost()) return false;
+        if (user.getPoints() < event.getCost()) return false;
 
         userRepository.updatePointsById(user.getPoints() - event.getCost(), user.getId());
 
@@ -111,11 +111,40 @@ public class EventServiceImpl implements EventService {
 
         boolean positive = false;
 
-        for(int i = 0; i < filters.length; i++) {
-            if(filters[i]) positive = true;
+        for (int i = 0; i < filters.length; i++) {
+            if (filters[i]) positive = true;
         }
 
-        if(!positive) filters[8] = true;
+        if (!positive) filters[8] = true;
+    }
+
+    @Override
+    public List<EventDTO> getUserEvents() {
+        List<EventDTO> userEvents = new ArrayList<>();
+
+        if (loggedUser == null) return null;
+        if (!loggedUser.isCreator()) return null;
+
+        userRepository.findByUsername(loggedUser.getUsername()).getAddedEvents()
+                .stream()
+                .forEach((e) -> {
+                    userEvents.add(new EventDTO(e));
+                });
+
+        return userEvents;
+    }
+
+    @Override
+    public boolean remove(Long id) {
+        if (loggedUser == null) return false;
+        if (!loggedUser.isCreator()) return false;
+
+        User user = userRepository.findByUsername(loggedUser.getUsername());
+
+        if (eventRepository.findById(id).orElse(null).getAddedBy().getId() != user.getId()) return false;
+        eventRepository.deleteById(id);
+
+        return true;
     }
 
     public boolean[] getFilters() {

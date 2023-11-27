@@ -50,6 +50,13 @@ public class EventsController {
         return "redirect:/browse";
     }
 
+    @GetMapping("/remove/{id}")
+    public String eventRemove(@PathVariable("id") Long id) {
+        eventService.remove(id);
+
+        return "redirect:/manage";
+    }
+
     @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public Resource downloadImage(@PathVariable("id") Long id) {
