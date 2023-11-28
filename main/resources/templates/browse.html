@@ -62,7 +62,7 @@
         (${currEvent.category==events.enums[7]} and ${events.filters[7]}) OR
         (${events.filters[8]})" class="event-listing">
             <div class="container-image">
-                <img th:src="@{/images/{id}(id=${currEvent.id})}" alt="Image">
+                <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}" alt="Image">
             </div>
 
             <div class="listing-content">
@@ -70,7 +70,7 @@
                     <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a>
                 </h1>
                 <p>
-                    <span th:text="${currEvent.category}"></span>
+                    <span th:text="${currEvent.category}"></span>, added by <span th:text="${currEvent.addedBy}"></span>
                 </p>
                 <p>
                     <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>

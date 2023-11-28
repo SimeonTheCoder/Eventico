@@ -1,36 +1,22 @@
 package com.eventico.model.dto;
 
 import com.eventico.model.entity.Event;
-import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
-public class EventDTO {
+public class EventResponseDTO {
     private Long id;
     private String name;
     private String description;
-    private String category;
     private String addedBy;
+    private String category;
     private int cost;
     private String location;
     private LocalDateTime start;
     private LocalDateTime end;
-    private byte[] image;
 
-    public EventDTO(String name, String description, String location, LocalDateTime start, LocalDateTime end, byte[] image) {
-        this.name = name;
-        this.description = description;
-        this.location = location;
-        this.start = start;
-        this.end = end;
-        this.image = image;
-    }
-
-    public EventDTO(Event event) {
+    public EventResponseDTO(Event event) {
         this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
@@ -39,9 +25,8 @@ public class EventDTO {
         this.end = event.getEnd();
         this.cost = event.getCost();
         this.category = String.valueOf(event.getCategory());
-        Base64.Encoder encoder = Base64.getEncoder();
-        this.image = encoder.encode(event.getImage());
         this.addedBy = event.getAddedBy().getUsername();
+        Base64.Encoder encoder = Base64.getEncoder();
     }
 
     public String getName() {
@@ -82,14 +67,6 @@ public class EventDTO {
 
     public void setEnd(LocalDateTime end) {
         this.end = end;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public int getCost() {

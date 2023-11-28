@@ -5,12 +5,12 @@ import com.eventico.model.dto.EventDTO;
 import com.eventico.repo.EventRepository;
 import com.eventico.service.EventService;
 import jakarta.validation.Valid;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -55,13 +55,5 @@ public class EventsController {
         eventService.remove(id);
 
         return "redirect:/manage";
-    }
-
-    @GetMapping(value = "/images/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public Resource downloadImage(@PathVariable("id") Long id) {
-        byte[] image = eventRepository.findById(id).orElse(null).getImage();
-
-        return new ByteArrayResource(image);
     }
 }
