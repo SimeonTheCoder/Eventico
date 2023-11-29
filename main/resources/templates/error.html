@@ -6,9 +6,13 @@
 <body>
     <header th:replace="~{fragments/common::nav}"></header>
 
-    <h1 style="font-size: 60px;">
-        404 Not found
-    </h1>
+    <div class="err-container">
+        <h1 style="font-size: 60px;">
+            <span th:text="${status}"></span>
+        </h1>
+
+        <h2 style="margin-left: 20px;">Our engineers are working on fixing the issue</h2>
+    </div>
 
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>
