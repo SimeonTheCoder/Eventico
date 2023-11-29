@@ -1,6 +1,7 @@
 package com.eventico.service.impl;
 
 import com.eventico.model.EventViewModel;
+import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
 import com.eventico.model.dto.EventDTO;
@@ -9,10 +10,13 @@ import com.eventico.model.entity.User;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.EventService;
+import com.eventico.service.LoggedUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -73,6 +77,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public boolean enroll(Long id) {
         Event event = eventRepository.findById(id).orElse(null);
 
@@ -84,12 +89,11 @@ public class EventServiceImpl implements EventService {
         if (user.getPoints() < event.getCost()) return false;
 
         userRepository.updatePointsById(user.getPoints() - event.getCost(), user.getId());
-
-        user.getParticipationEvents().add(event);
         event.getParticipants().add(user);
 
-        userRepository.save(user);
         eventRepository.save(event);
+
+        loggedUser.login(user);
 
 //        userRepository.updateParticipationEventsById(user.getParticipationEvents(), user.getId());
 //        eventRepository.save(event);
@@ -145,6 +149,34 @@ public class EventServiceImpl implements EventService {
         eventRepository.deleteById(id);
 
         return true;
+    }
+
+    @Override
+    public HomeFeedViewModel getEventsForUser(String username) {
+        User user = userRepository.findByUsername(username);
+
+        List<EventDTO> userEvents = new ArrayList<>();
+        List<EventDTO> participating = new ArrayList<>();
+
+        List<String> followedUsers = new ArrayList<>();
+
+        user.getFollowedUsers().stream().forEach((u) -> {
+            followedUsers.add(u.getUsername());
+        });
+
+        user.getParticipationEvents().stream().forEach((e) -> {
+            participating.add(new EventDTO(e));
+        });
+
+        eventRepository.findAll().stream().forEach((e) -> {
+            if(followedUsers.contains(e.getAddedBy().getUsername())) {
+                userEvents.add(new EventDTO(e));
+            }
+        });
+
+        userEvents.sort(Comparator.comparing(EventDTO::getStart));
+
+        return new HomeFeedViewModel(userEvents, participating);
     }
 
     public boolean[] getFilters() {

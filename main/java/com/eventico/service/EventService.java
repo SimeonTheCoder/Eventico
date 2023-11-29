@@ -1,6 +1,7 @@
 package com.eventico.service;
 
 import com.eventico.model.EventViewModel;
+import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
 import com.eventico.model.dto.EventDTO;
@@ -19,4 +20,6 @@ public interface EventService {
     List<EventDTO> getUserEvents();
 
     boolean remove( Long id);
+
+    HomeFeedViewModel getEventsForUser(String username);
 }

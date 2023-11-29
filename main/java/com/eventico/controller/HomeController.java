@@ -1,8 +1,9 @@
 package com.eventico.controller;
 
+import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.service.EventService;
-import com.eventico.service.impl.LoggedUser;
+import com.eventico.service.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,8 @@ public class HomeController {
 
     @GetMapping("/home")
     public ModelAndView homePage() {
-        return new ModelAndView("home");
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        return new ModelAndView("home", "feed", eventService.getEventsForUser(loggedUser.getUsername()));
     }
 
     @GetMapping("/browse")
@@ -33,6 +35,8 @@ public class HomeController {
 
     @GetMapping("/manage")
     public ModelAndView managePage() {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isCreator()) throw new AccessDeniedException();
         return new ModelAndView("manage", "events", eventService.getUserEvents());
     }
 

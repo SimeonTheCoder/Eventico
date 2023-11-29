@@ -11,20 +11,50 @@
             <h1>Your upcoming events</h1>
         </div>
 
-        <div th:each="currEvent : ${upcomingEvents}" class="card-container">
-            <div class="card">
-                <img src="img/test.jpg">
-                <h1>
-                    <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a>
-                </h1>
-                <p>
-                    <span th:text="${currEvent.description}"></span>
-                </p>
+        <div style="display: flex; overflow-x: auto">
+            <div th:each="currEvent : ${feed.participating}" class="card-container">
+                <div class="card">
+                    <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}">
+                    <h1>
+                        <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span
+                                th:text="${currEvent.name}"></span></a>
+                    </h1>
+                    <p>
+                        Starts <span th:text="${currEvent.start}"></span>
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="center">
-            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Browse events" class="btn"></a>
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Browse events"
+                    class="btn"></a>
+        </div>
+    </div>
+
+    <div class="coming-events-container">
+        <div class="center">
+            <h1>For you</h1>
+        </div>
+
+        <div style="display: flex; overflow-x: auto">
+            <div th:each="currEvent : ${feed.foryou}" class="card-container">
+                <div class="card">
+                    <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}">
+                    <h1>
+                        <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span
+                                th:text="${currEvent.name}"></span></a>
+                    </h1>
+                    <p>
+                        Starts <span th:text="${currEvent.start}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="center">
+            <a th:href="@{/browse}"><input style="margin-top: 40px;" type="button" value="Browse events"
+                    class="btn"></a>
         </div>
     </div>
 

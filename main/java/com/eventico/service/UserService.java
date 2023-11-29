@@ -7,4 +7,6 @@ public interface UserService {
     public boolean register(UserRegisterBinding binding);
 
     public boolean login(UserLoginBinding binding);
+
+    public boolean follow(String username);
 }

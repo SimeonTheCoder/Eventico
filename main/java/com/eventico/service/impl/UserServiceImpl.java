@@ -6,6 +6,7 @@ import com.eventico.model.entity.User;
 import com.eventico.model.enums.UserRoles;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.UserRepository;
+import com.eventico.service.LoggedUser;
 import com.eventico.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,8 +57,26 @@ public class UserServiceImpl implements UserService {
         if(user == null) return false;
         if (!passwordEncoder.matches(binding.getPassword(), user.getPassword())) return false;
 
-        loggedUser.login(user.getUsername());
+        loggedUser.login(user);
         loggedUser.setCreator(user.getRole() == UserRoles.CREATOR);
+
+        return true;
+    }
+
+    @Override
+    public boolean follow(String username) {
+        if(!loggedUser.isLogged()) return false;
+
+        User followedUser = userRepository.findByUsername(username);
+
+        if(followedUser == null) return false;
+
+        User user = userRepository.findByUsername(loggedUser.getUsername());
+        user.getFollowedUsers().add(followedUser);
+
+        userRepository.save(user);
+
+        loggedUser.login(user);
 
         return true;
     }

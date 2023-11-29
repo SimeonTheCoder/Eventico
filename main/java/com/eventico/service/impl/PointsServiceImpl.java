@@ -2,6 +2,7 @@ package com.eventico.service.impl;
 
 import com.eventico.model.entity.User;
 import com.eventico.repo.UserRepository;
+import com.eventico.service.LoggedUser;
 import com.eventico.service.PointsService;
 import com.eventico.util.CodeValidator;
 import org.springframework.stereotype.Service;

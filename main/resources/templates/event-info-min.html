@@ -4,10 +4,8 @@
 <head th:replace="~{fragments/common::head}"></head>
 
 <body>
-    <header th:replace="~{fragments/common::nav}"></header>
-
     <div class="info-image">
-        <img th:src="@{/api/event/image/{id}(id=${event.id})}" alt="Image">
+        <img style="margin-top: -60px; height: 450px;" th:src="@{/api/event/image/{id}(id=${event.id})}" alt="Image">
     </div>
 
     <div class="event-card">
@@ -22,11 +20,7 @@
         <p>
             Cost: <span th:text="${event.cost}"></span>
         </p>
-
-        <a th:href="@{/enroll/{id}(id=${event.id})}"><input style="margin-top: 40px;" type="button" value="Enroll" class="btn"></a>
     </div>
-
-    <footer th:replace="~{fragments/common::footer}"></footer>
 </body>
 
 </html>

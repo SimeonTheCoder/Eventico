@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 94%" lang="en">
 
 <head th:replace="~{fragments/common::head}"></head>
 
-<body>
-    <header th:replace="~{fragments/common::nav}"></header>
-    <div class="coming-events-container">
-        <h1>
-            Welcome to Eventico!
-        </h1>
+<body style="height: 94%">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
+        <div class="container">
+            <h1 style="padding: 20px; font-size: 60px;">
+                Welcome to Eventico!
+            </h1>
 
-        <p>
-            The ultimate event manager! Browse events, add events, manage your time and have fun while at it!
-        </p>
+            <p>
+                The ultimate event manager! Browse events, add events, manage your time and have fun while at it!
+            </p>
 
-        <p>
-            <a th:href="@{/login}">Login</a> if you have an account or <a th:href="@{/register}">Register</a>.
-        </p>
+            <p>
+                <a style="padding: 0px;" th:href="@{/login}">Login</a> if you have an account or <a style="padding: 0px;" th:href="@{/register}">Register</a>.
+            </p>
+        </div>
     </div>
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>

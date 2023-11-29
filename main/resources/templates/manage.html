@@ -12,7 +12,7 @@
     <div th:each="currEvent : ${events}">
         <div class="event-listing">
             <div class="container-image">
-                <img th:src="@{/images/{id}(id=${currEvent.id})}" alt="Image">
+                <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}" alt="Image">
             </div>
 
             <div class="listing-content">

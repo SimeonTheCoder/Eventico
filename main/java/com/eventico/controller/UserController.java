@@ -1,16 +1,18 @@
 package com.eventico.controller;
 
+import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.EventService;
 import com.eventico.service.UserService;
-import com.eventico.service.impl.LoggedUser;
+import com.eventico.service.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,12 +57,27 @@ public class UserController {
 
     @GetMapping("/account")
     public ModelAndView accountPage() {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+
         return new ModelAndView("/account", "user", userRepository.findByUsername(loggedUser.getUsername()));
     }
 
     @PostMapping("/logout")
     public String logout() {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+
         loggedUser.logout();
         return "redirect:/login";
+    }
+
+    @GetMapping("/follow/{username}")
+    public String followUser(@PathVariable("username") String username) {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+
+        boolean result = userService.follow(username);
+
+        if(!result) return "redirect:/error";
+
+        return "redirect:/browse";
     }
 }

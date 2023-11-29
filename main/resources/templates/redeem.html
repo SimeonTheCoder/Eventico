@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 94%;" lang="en">
 
 <head th:replace="~{fragments/common::head}"></head>
 
-<body>
-    <header th:replace="~{fragments/common::nav}"></header>
+<body style="height: 94%">
+    <div class="all-content" style="min-height: 94%; margin-bottom: -40px;">
+        <header th:replace="~{fragments/common::nav}"></header>
 
-    <h1>
-        Redeem code
-    </h1>
+        <h1>
+            Redeem code
+        </h1>
 
-    <p>
-        Redeem code to gain points
-    </p>
+        <p>
+            Redeem code to gain points
+        </p>
 
-    <form th:method="POST" th:action="@{/redeem}">
-        <label>Code: </label>
-        <input type="text" name="code">
-        <br>
+        <form th:method="POST" th:action="@{/redeem}">
+            <label>Code: </label>
+            <input type="text" name="code">
+            <br>
 
-        <input type="submit" value="Redeem code" id="redeem-btn">
-    </form>
+            <input type="submit" value="Redeem code" id="redeem-btn">
+        </form>
+    </div>
 
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>

@@ -4,6 +4,23 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: green;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: yellow;
+}
+
 h1 {
     padding: 20px;
 }
@@ -118,9 +135,11 @@ img {
 
 .card {
     background: linear-gradient(180deg, white, transparent);
-    box-shadow: #00000091 0px 0px 200px 0px;
+    box-shadow: #00000052 0px 0px 50px 0px;
 
     border-radius: 0px 0px 20px 20px;
+
+    width: 400px;
 
     transition: background 0.5s;
 }
@@ -130,6 +149,10 @@ img {
 }
 
 .card-container {
+    padding: 20px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 20px;
@@ -141,12 +164,22 @@ img {
 
 .coming-events-container {
     padding: 20px;
-    padding-top: 60px;
-    padding-bottom: 60px;
+
+    background: linear-gradient(359deg, lightgreen, #ffff0069);
+    margin: 40px;
+    border-radius: 20px;
+}
+
+.container {
+    padding: 20px;
 
     background: linear-gradient(359deg, lightgreen, transparent);
     margin: 40px;
     border-radius: 20px;
+}
+
+.coming-events-container h1{
+    padding: 0px;
 }
 
 .center {
@@ -190,7 +223,7 @@ img {
     flex-wrap: wrap;
 }
 
-.event-card { 
+.event-card {
     background: white;
     margin-top: -32px;
     padding: 20px;
@@ -227,6 +260,8 @@ select {
 }
 
 .err-container {
+    display: flex;
+    justify-content: space-around;
     padding: 60px;
     background: linear-gradient(0deg, lightgreen, transparent);
     border-radius: 20px;
@@ -234,4 +269,9 @@ select {
     margin: 40px;
     padding-bottom: 100px;
     padding-top: 100px;
+}
+
+.all-content {
+    min-height: 94%;
+    margin-bottom: -40px;
 }

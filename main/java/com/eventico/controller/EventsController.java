@@ -1,9 +1,13 @@
 package com.eventico.controller;
 
+import com.eventico.exceptions.AccessDeniedException;
+import com.eventico.exceptions.EventNotFoundException;
 import com.eventico.model.dto.EventAddBinding;
 import com.eventico.model.dto.EventDTO;
+import com.eventico.model.entity.Event;
 import com.eventico.repo.EventRepository;
 import com.eventico.service.EventService;
+import com.eventico.service.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,34 +21,61 @@ import org.springframework.web.servlet.ModelAndView;
 public class EventsController {
     private final EventService eventService;
     private final EventRepository eventRepository;
+    private final LoggedUser loggedUser;
 
-    public EventsController(EventService eventService, EventRepository eventRepository) {
+    public EventsController(EventService eventService, EventRepository eventRepository, LoggedUser loggedUser) {
         this.eventService = eventService;
         this.eventRepository = eventRepository;
+        this.loggedUser = loggedUser;
     }
 
     @GetMapping("add-event")
     public ModelAndView addModelPage() {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isCreator()) throw new AccessDeniedException();
+
         return new ModelAndView("add-event");
     }
 
     @PostMapping("add-event")
     public String addModelForm(@ModelAttribute("eventAddBindingModel") @Valid EventAddBinding eventAddBinding, BindingResult bindingResult) {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isCreator()) throw new AccessDeniedException();
+
         eventService.addEvent(eventAddBinding);
         return "redirect:/home";
     }
 
     @GetMapping("/event-info/{id}")
     public ModelAndView eventInfoPage(@PathVariable("id") Long id) {
+        Event event = eventRepository.findById(id).orElse(null);
+
+        if(event == null) throw new EventNotFoundException();
+
         return new ModelAndView(
                 "event-info",
                 "event",
-                new EventDTO(eventRepository.findById(id).orElse(null))
+                new EventDTO(event)
+        );
+    }
+
+    @GetMapping("/event-info-min/{id}")
+    public ModelAndView eventInfoPageMinimal(@PathVariable("id") Long id) {
+        Event event = eventRepository.findById(id).orElse(null);
+
+        if(event == null) throw new EventNotFoundException();
+
+        return new ModelAndView(
+                "event-info-min",
+                "event",
+                new EventDTO(event)
         );
     }
 
     @GetMapping("/enroll/{id}")
     public String eventEnroll(@PathVariable("id") Long id) {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+
         eventService.enroll(id);
 
         return "redirect:/browse";
@@ -52,6 +83,9 @@ public class EventsController {
 
     @GetMapping("/remove/{id}")
     public String eventRemove(@PathVariable("id") Long id) {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isCreator()) throw new AccessDeniedException();
+
         eventService.remove(id);
 
         return "redirect:/manage";

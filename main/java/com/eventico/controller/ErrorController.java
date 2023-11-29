@@ -21,9 +21,10 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 thymleafStatus = "Oops, the page you're looking for isn't found";
-            }
-            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+            } else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 thymleafStatus = "Oops, server error";
+            } else if(statusCode == HttpStatus.FORBIDDEN.value()) {
+                thymleafStatus = "Access denied";
             }
         }
 

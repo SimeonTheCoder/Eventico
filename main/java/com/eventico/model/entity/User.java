@@ -32,6 +32,9 @@ public class User extends BaseEntity{
     @OneToMany(mappedBy = "addedBy", fetch = FetchType.EAGER)
     private List<Event> addedEvents;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> followedUsers;
+
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Event> participationEvents;
 
@@ -94,5 +97,13 @@ public class User extends BaseEntity{
 
     public void setParticipationEvents(List<Event> participationEvents) {
         this.participationEvents = participationEvents;
+    }
+
+    public List<User> getFollowedUsers() {
+        return followedUsers;
+    }
+
+    public void setFollowedUsers(List<User> followedUsers) {
+        this.followedUsers = followedUsers;
     }
 }
