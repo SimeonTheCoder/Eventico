@@ -18,6 +18,8 @@ public class LoggedUser {
 
     public LoggedUser() {
         isLogged = false;
+        this.followedUsers = new ArrayList<>();
+        this.eventsParticipation = new ArrayList<>();
     }
 
     public String getUsername() {

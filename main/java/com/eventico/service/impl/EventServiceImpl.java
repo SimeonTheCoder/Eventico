@@ -179,6 +179,11 @@ public class EventServiceImpl implements EventService {
         return new HomeFeedViewModel(userEvents, participating);
     }
 
+    @Override
+    public Event getEvent(Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
     public boolean[] getFilters() {
         return filters;
     }

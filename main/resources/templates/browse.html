@@ -7,32 +7,66 @@
     <script>
         window.addEventListener('load', function () {
             document.getElementById("close-btn").onclick = function(e) { return myHandler(e); };
+            document.getElementById("close-btn2").onclick = function(e) { return myHandler(e); };
             [...document.getElementsByClassName("event-link")].forEach(element => {
                 element.onclick = function() { return openEmbed(element.id); };
             });
+            [...document.getElementsByClassName("report-btn")].forEach(element => {
+                element.onclick = function() { return openReport(element.id.split("")[0]); };
+            });
         });
 
-        function myHandler(e) {
+        function myHandler(event) {
             document.getElementById("page-display").style.visibility = "hidden";
+            document.getElementById("page-display2").style.visibility = "hidden";
+            event.preventDefault();
         }
 
-        function openEmbed(id) {
+        async function openEmbed(id) {
             document.getElementById("frame").src = "http://localhost:8080/event-info-min/" + id;
+            await sleep(100);
             document.getElementById("page-display").style.visibility = "visible";
         }
+
+        async function openReport(id) {
+            document.getElementById("frame-report").src = "http://localhost:8080/report/" + id;
+            await sleep(100);
+            document.getElementById("page-display2").style.visibility = "visible";
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        window.onmessage = async function(e) {
+            await sleep(1000);
+
+            if (e.data == 'done') {
+                document.getElementById("page-display2").style.visibility = "hidden";
+            }
+        };
     </script>
 </head>
 
 <body>
     <header th:replace="~{fragments/common::nav}"></header>
 
-    <div id="page-display" style="visibility: hidden;">
+    <div style="visibility: hidden;" id="page-display">
         <div style="width: 100%; position: fixed; height: 100%; left: 0%; top: 0%; backdrop-filter: brightness(50%);">
             <h1 style="position: fixed; left: 77%; top: 8%; background-color: white; padding: 10px; border-radius: 20px; font-size: 20px;">
                 <a id="close-btn" href="#">❎Close</a>
             </h1>
         </div>
         <iframe id="frame" style="box-shadow: #0000009c 0px 0px 200px 0px; width: 70%; position: fixed; height: 70%; left: 15%; top: 15%; background-color: white; border: 0px; border-radius: 20px;" th:src="@{/event-info-min/2}"></iframe>
+    </div>
+
+    <div style="visibility: hidden;" id="page-display2">
+        <div style="width: 100%; position: fixed; height: 100%; left: 0%; top: 0%; backdrop-filter: brightness(50%);">
+            <h1 style="position: fixed; left: 77%; top: 8%; background-color: white; padding: 10px; border-radius: 20px; font-size: 20px;">
+                <a id="close-btn2" href="#">❎Close</a>
+            </h1>
+        </div>
+        <iframe id="frame-report" style="box-shadow: #0000009c 0px 0px 200px 0px; width: 70%; position: fixed; height: 70%; left: 15%; top: 15%; background-color: white; border: 0px; border-radius: 20px;" th:src="@{/report}"></iframe>
     </div>
 
     <form style="box-shadow: #016100 0px 0px 200px 0px;" th:method="POST" th:action="@{/browse}" class="tag-form">
@@ -94,7 +128,7 @@
             <div class="listing-content">
                 <h1>
                     <!-- <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a> -->
-                    <a class="event-link" th:id="${currEvent.id}" href="#"><span th:text="${currEvent.name}"></span></a>
+                    <a class="event-link" th:id="${currEvent.id}" href="javascript:void(0)"><span th:text="${currEvent.name}"></span></a>
                 </h1>
                 <p>
                     <span th:text="${currEvent.category}"></span>, added by <span th:text="${currEvent.addedBy}"></span>
@@ -106,8 +140,9 @@
             </div>
 
             <div class="buy-section">
+                <a th:if="${@loggedUser.logged}" class="report-btn" th:id="${currEvent.id + ' report'}" href="javascript:void(0)">🚩 Report</a>
                 <h2><span th:text="${currEvent.cost}"></span> points</h2>
-                <a th:unless="${@loggedUser.eventsParticipation.contains(currEvent.id)}" th:href="@{/enroll/{id}(id=${currEvent.id})}"><input style="margin-top: 40px;" type="button"
+                <a th:if="${@loggedUser.logged}" th:unless="${@loggedUser.eventsParticipation.contains(currEvent.id)}" th:href="@{/enroll/{id}(id=${currEvent.id})}"><input style="margin-top: 40px;" type="button"
                         value="Enroll" class="btn"></a>
             </div>
         </div>

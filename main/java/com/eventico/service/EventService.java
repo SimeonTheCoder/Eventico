@@ -5,21 +5,24 @@ import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
 import com.eventico.model.dto.EventDTO;
+import com.eventico.model.entity.Event;
 
 import java.util.List;
 
 public interface EventService {
-    public boolean addEvent(EventAddBinding binding);
+    boolean addEvent(EventAddBinding binding);
 
-    public EventViewModel getHomeData();
+    EventViewModel getHomeData();
 
-    public boolean enroll(Long id);
+    boolean enroll(Long id);
 
-    public void filterSearch(BrowseSelectionFilterBinding binding);
+    void filterSearch(BrowseSelectionFilterBinding binding);
 
     List<EventDTO> getUserEvents();
 
-    boolean remove( Long id);
+    boolean remove(Long id);
 
     HomeFeedViewModel getEventsForUser(String username);
+
+    Event getEvent(Long id);
 }

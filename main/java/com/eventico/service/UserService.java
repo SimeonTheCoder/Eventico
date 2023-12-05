@@ -2,11 +2,14 @@ package com.eventico.service;
 
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
+import com.eventico.model.entity.User;
 
 public interface UserService {
-    public boolean register(UserRegisterBinding binding);
+    boolean register(UserRegisterBinding binding);
 
-    public boolean login(UserLoginBinding binding);
+    boolean login(UserLoginBinding binding);
 
-    public boolean follow(String username);
+    boolean follow(String username);
+
+    User findByUsername(String username);
 }

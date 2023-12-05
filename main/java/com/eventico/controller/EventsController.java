@@ -4,6 +4,7 @@ import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.exceptions.EventNotFoundException;
 import com.eventico.model.dto.EventAddBinding;
 import com.eventico.model.dto.EventDTO;
+import com.eventico.model.dto.EventReportBinding;
 import com.eventico.model.entity.Event;
 import com.eventico.repo.EventRepository;
 import com.eventico.service.EventService;
@@ -20,12 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class EventsController {
     private final EventService eventService;
-    private final EventRepository eventRepository;
     private final LoggedUser loggedUser;
 
-    public EventsController(EventService eventService, EventRepository eventRepository, LoggedUser loggedUser) {
+    public EventsController(EventService eventService, LoggedUser loggedUser) {
         this.eventService = eventService;
-        this.eventRepository = eventRepository;
         this.loggedUser = loggedUser;
     }
 
@@ -48,7 +47,7 @@ public class EventsController {
 
     @GetMapping("/event-info/{id}")
     public ModelAndView eventInfoPage(@PathVariable("id") Long id) {
-        Event event = eventRepository.findById(id).orElse(null);
+        Event event = eventService.getEvent(id);
 
         if(event == null) throw new EventNotFoundException();
 
@@ -61,7 +60,7 @@ public class EventsController {
 
     @GetMapping("/event-info-min/{id}")
     public ModelAndView eventInfoPageMinimal(@PathVariable("id") Long id) {
-        Event event = eventRepository.findById(id).orElse(null);
+        Event event = eventService.getEvent(id);
 
         if(event == null) throw new EventNotFoundException();
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<head>
+    <script>
+        window.addEventListener('load', function () {
+            document.getElementById("report-btn").onclick = function(e) { return myHandler(e); };
+        });
+
+        function myHandler(e) {
+            window.top.postMessage('done', '*');
+
+            document.getElementById('form').remove();
+            document.getElementById('title').innerHTML = '<br><br><br> Report submitted!';
+        }
+    </script>
+</head>
+
+<body>
+    <h1 id="title">
+        Report <span th:text="${event.name}"></span>
+    </h1>
+
+    <form id="form" th:method="POST" th:action="@{/report/{id}(id=${event.id})}">
+        <label>
+            Reason:
+        </label>
+
+        <input type="text" name="reason">
+
+        <label>
+            Details:
+        </label>
+
+        <input type="text" name="description">
+
+        <br>
+
+        <input id="report-btn" type="submit" value="Report">
+    </form>
+</body>
+
+</html>

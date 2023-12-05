@@ -3,10 +3,9 @@ package com.eventico.controller;
 import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
-import com.eventico.repo.UserRepository;
 import com.eventico.service.EventService;
-import com.eventico.service.UserService;
 import com.eventico.service.LoggedUser;
+import com.eventico.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,13 +20,11 @@ public class UserController {
     private final LoggedUser loggedUser;
     private final UserService userService;
     private final EventService eventsService;
-    private final UserRepository userRepository;
 
-    public UserController(LoggedUser loggedUser, UserService userService, EventService eventsService, UserRepository userRepository) {
+    public UserController(LoggedUser loggedUser, UserService userService, EventService eventsService) {
         this.loggedUser = loggedUser;
         this.userService = userService;
         this.eventsService = eventsService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/login")
@@ -59,7 +56,7 @@ public class UserController {
     public ModelAndView accountPage() {
         if(!loggedUser.isLogged()) throw new AccessDeniedException();
 
-        return new ModelAndView("/account", "user", userRepository.findByUsername(loggedUser.getUsername()));
+        return new ModelAndView("/account", "user", userService.findByUsername(loggedUser.getUsername()));
     }
 
     @PostMapping("/logout")
