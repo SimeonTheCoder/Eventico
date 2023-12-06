@@ -23,13 +23,13 @@
         }
 
         async function openEmbed(id) {
-            document.getElementById("frame").src = "http://localhost:8080/event-info-min/" + id;
+            document.getElementById("frame").src = "/event-info-min/" + id;
             await sleep(100);
             document.getElementById("page-display").style.visibility = "visible";
         }
 
         async function openReport(id) {
-            document.getElementById("frame-report").src = "http://localhost:8080/report/" + id;
+            document.getElementById("frame-report").src = "/report/" + id;
             await sleep(100);
             document.getElementById("page-display2").style.visibility = "visible";
         }
@@ -127,7 +127,6 @@
 
             <div class="listing-content">
                 <h1>
-                    <!-- <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a> -->
                     <a class="event-link" th:id="${currEvent.id}" href="javascript:void(0)"><span th:text="${currEvent.name}"></span></a>
                 </h1>
                 <p>
@@ -140,7 +139,8 @@
             </div>
 
             <div class="buy-section">
-                <a th:if="${@loggedUser.logged}" class="report-btn" th:id="${currEvent.id + ' report'}" href="javascript:void(0)">🚩 Report</a>
+                <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin}" class="report-btn" th:id="${currEvent.id + ' report'}" href="javascript:void(0)">🚩 Report</a>
+                <a th:if="${@loggedUser.logged and @loggedUser.isAdmin}" th:href="@{/remove/{id}(id=${currEvent.id})}">❌Delete</a>
                 <h2><span th:text="${currEvent.cost}"></span> points</h2>
                 <a th:if="${@loggedUser.logged}" th:unless="${@loggedUser.eventsParticipation.contains(currEvent.id)}" th:href="@{/enroll/{id}(id=${currEvent.id})}"><input style="margin-top: 40px;" type="button"
                         value="Enroll" class="btn"></a>

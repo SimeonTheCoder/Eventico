@@ -10,7 +10,7 @@
     <header th:replace="~{fragments/common::nav}"></header>
 
     <div th:each="currEvent : ${events}">
-        <div class="event-listing">
+        <div th:if="${currEvent.addedBy.username == @loggedUser.username or @loggedUser.isAdmin}" class="event-listing">
             <div class="container-image">
                 <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}" alt="Image">
             </div>

@@ -25,6 +25,7 @@
                 <a th:href="@{/browse}">Browse</a>
                 <a th:if="${@loggedUser.creator}" th:href="@{/add-event}">Host event</a>
                 <a th:if="${@loggedUser.creator}" th:href="@{/manage}">Manage events</a>
+                <a th:if="${@loggedUser.admin}" th:href="@{/manage-reports}">Manage reports</a>
                 <a th:if="${@loggedUser.logged}" th:href="@{/redeem}">Redeem points</a>
                 <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Redeem points</a>
             </div>

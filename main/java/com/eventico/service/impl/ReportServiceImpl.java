@@ -9,8 +9,11 @@ import com.eventico.repo.UserRepository;
 import com.eventico.service.LoggedUser;
 import com.eventico.service.ReportService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ReportServiceImpl implements ReportService {
@@ -45,5 +48,35 @@ public class ReportServiceImpl implements ReportService {
         reportRepository.save(report);
 
         return true;
+    }
+
+    @Override
+    public Report getReport(Long id) {
+        return reportRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public boolean approveReport(Long id) {
+        Report report = reportRepository.findById(id).orElse(null);
+        if(report == null) return false;
+
+        Event event = eventRepository.findById(report.getReportedEvent().getId()).orElse(null);
+        if(event == null) return false;
+
+        reportRepository.findAll().forEach((r) -> {
+             if(Objects.equals(r.getReportedEvent().getId(), event.getId())) {
+                 reportRepository.deleteById(r.getId());
+             }
+        });
+
+        eventRepository.deleteById(event.getId());
+
+        return true;
+    }
+
+    @Override
+    public List<Report> getAll() {
+        return reportRepository.findAll();
     }
 }

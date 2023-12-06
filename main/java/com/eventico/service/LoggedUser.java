@@ -1,6 +1,7 @@
 package com.eventico.service;
 
 import com.eventico.model.entity.User;
+import com.eventico.model.enums.UserRoles;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -13,6 +14,7 @@ public class LoggedUser {
     private String username;
     private boolean isLogged;
     private boolean isCreator;
+    private boolean isAdmin;
     private List<Long> eventsParticipation;
     private List<String> followedUsers;
 
@@ -60,12 +62,17 @@ public class LoggedUser {
         user.getParticipationEvents().stream().forEach((e) -> {
             eventsParticipation.add(e.getId());
         });
+
+        this.isAdmin = (user.getRole() == UserRoles.ADMIN);
+        this.isCreator = (user.getRole() == UserRoles.CREATOR) || this.isAdmin;
     }
 
     public void logout() {
         this.username = null;
+
         this.isLogged = false;
         this.isCreator = false;
+        this.isAdmin = false;
 
         this.followedUsers = new ArrayList<>();
         this.eventsParticipation = new ArrayList<>();
@@ -77,6 +84,14 @@ public class LoggedUser {
 
     public void setEventsParticipation(List<Long> eventsParticipation) {
         this.eventsParticipation = eventsParticipation;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public List<String> getFollowedUsers() {

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <head th:replace="~{fragments/common::head}"></head>
+
+    <script>
+        window.addEventListener('load', function () {
+            document.getElementById("close-btn").onclick = function(e) { return myHandler(e); };
+            [...document.getElementsByClassName("event-link")].forEach(element => {
+                element.onclick = function() { return openEmbed(element.id); };
+            });
+            [...document.getElementsByClassName("report-btn")].forEach(element => {
+                element.onclick = function() { return openReport(element.id.split("")[0]); };
+            });
+        });
+
+        function myHandler(event) {
+            document.getElementById("page-display").style.visibility = "hidden";
+            event.preventDefault();
+        }
+
+        async function openEmbed(id) {
+            document.getElementById("frame").src = "/event-report-min/" + id;
+            await sleep(100);
+            document.getElementById("page-display").style.visibility = "visible";
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        window.onmessage = async function(e) {
+            await sleep(1000);
+
+            if (e.data == 'done') {
+                document.getElementById("page-display2").style.visibility = "hidden";
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <div style="visibility: hidden;" id="page-display">
+        <div style="width: 100%; position: fixed; height: 100%; left: 0%; top: 0%; backdrop-filter: brightness(50%);">
+            <h1 style="position: fixed; left: 77%; top: 8%; background-color: white; padding: 10px; border-radius: 20px; font-size: 20px;">
+                <a id="close-btn" href="#">❎Close</a>
+            </h1>
+        </div>
+        <iframe id="frame" style="box-shadow: #0000009c 0px 0px 200px 0px; width: 70%; position: fixed; height: 70%; left: 15%; top: 15%; background-color: white; border: 0px; border-radius: 20px;" th:src="@{/event-info-min/2}"></iframe>
+    </div>
+
+    <div th:each="currReport : ${reports}">
+        <div class="event-listing">
+            <div class="container-image">
+                <img th:src="@{/api/event/image/{id}(id=${currReport.reportedEvent.id})}" alt="Image">
+            </div>
+
+            <div class="listing-content">
+                <h1>
+                    <!-- <a th:href="@{/event-info/{id}(id=${currReport.reportedEvent.id})}"><span th:text="${currReport.reason}"></span></a> -->
+                    <a class="event-link" th:id="${currReport.id}" href="javascript:void(0)"><span th:text="${currReport.reason}"></span></a>
+                </h1>
+                <p>
+                    <span th:text="${currReport.description}"></span>
+                </p>
+                <p>
+                    <span th:text="${currReport.reportTime}"></span> by <span th:text="${currReport.reportedBy}"></span>
+                </p>
+            </div>
+
+            <div class="buy-section">
+                <a th:href="@{/report-approve/{id}(id=${currReport.id})}"><input style="margin-top: 40px; background-color: darkgreen;" type="button"
+                        value="Approve" class="btn"></a>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

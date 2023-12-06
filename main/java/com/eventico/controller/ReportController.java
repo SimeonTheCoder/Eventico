@@ -1,8 +1,11 @@
 package com.eventico.controller;
 
 import com.eventico.exceptions.AccessDeniedException;
+import com.eventico.exceptions.EventNotFoundException;
+import com.eventico.model.dto.EventDTO;
 import com.eventico.model.dto.EventReportBinding;
 import com.eventico.model.entity.Event;
+import com.eventico.model.entity.Report;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
 import com.eventico.service.ReportService;
@@ -42,5 +45,28 @@ public class ReportController {
         reportService.reportEvent(id, eventReportBinding);
 
         return "redirect:/browse";
+    }
+
+    @GetMapping("/event-report-min/{id}")
+    public ModelAndView eventReportPageMinimal(@PathVariable("id") Long id) {
+        Report report = reportService.getReport(id);
+
+        if(report == null) throw new EventNotFoundException();
+
+        return new ModelAndView(
+                "event-report-min",
+                "report",
+                report
+        );
+    }
+
+    @GetMapping("/report-approve/{id}")
+    public String eventRemove(@PathVariable("id") Long id) {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isAdmin()) throw new AccessDeniedException();
+
+        reportService.approveReport(id);
+
+        return "redirect:/manage";
     }
 }

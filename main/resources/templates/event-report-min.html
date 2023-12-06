@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <div class="info-image">
+        <img style="margin-top: -60px; height: 450px;" th:src="@{/api/event/image/{id}(id=${report.reportedEvent.id})}" alt="Image">
+    </div>
+
+    <div class="event-card">
+        <h1>
+            <span th:text="${report.reportedEvent.name}"></span>
+        </h1>
+
+        <p>
+            <span th:text="${report.reportedEvent.description}"></span>
+        </p>
+
+        <h1>
+            <span style="color: red" th:text="${report.reason}"></span>
+        </h1>
+
+        <p>
+            <span style="color: red"  th:text="${report.description}"></span>
+        </p>
+
+        <p style="color: red">
+            Date: <span th:text="${report.reportTime}"></span>
+        </p>
+    </div>
+</body>
+
+</html>

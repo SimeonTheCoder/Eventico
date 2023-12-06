@@ -4,6 +4,7 @@ import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
+import com.eventico.service.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,10 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
     private final LoggedUser loggedUser;
     private final EventService eventService;
+    private final ReportService reportService;
 
-    public HomeController(LoggedUser loggedUser, EventService eventService) {
+    public HomeController(LoggedUser loggedUser, EventService eventService, ReportService reportService) {
         this.loggedUser = loggedUser;
         this.eventService = eventService;
+        this.reportService = reportService;
     }
 
     @GetMapping("/home")
@@ -37,7 +40,14 @@ public class HomeController {
     public ModelAndView managePage() {
         if(!loggedUser.isLogged()) throw new AccessDeniedException();
         if(!loggedUser.isCreator()) throw new AccessDeniedException();
-        return new ModelAndView("manage", "events", eventService.getUserEvents());
+        return new ModelAndView("manage", "events", eventService.getAll());
+    }
+
+    @GetMapping("/manage-reports")
+    public ModelAndView manageReports() {
+        if(!loggedUser.isLogged()) throw new AccessDeniedException();
+        if(!loggedUser.isCreator()) throw new AccessDeniedException();
+        return new ModelAndView("manage-reports", "reports", reportService.getAll());
     }
 
     @PostMapping("/browse")

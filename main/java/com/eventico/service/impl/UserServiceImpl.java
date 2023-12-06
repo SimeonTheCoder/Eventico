@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(binding.getPassword(), user.getPassword())) return false;
 
         loggedUser.login(user);
-        loggedUser.setCreator(user.getRole() == UserRoles.CREATOR);
 
         return true;
     }

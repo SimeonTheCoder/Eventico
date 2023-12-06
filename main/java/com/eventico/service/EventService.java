@@ -25,4 +25,6 @@ public interface EventService {
     HomeFeedViewModel getEventsForUser(String username);
 
     Event getEvent(Long id);
+
+    List<Event> getAll();
 }

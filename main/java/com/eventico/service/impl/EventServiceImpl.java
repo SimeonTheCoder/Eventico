@@ -141,11 +141,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public boolean remove(Long id) {
         if (loggedUser == null) return false;
-        if (!loggedUser.isCreator()) return false;
+        if (!loggedUser.isCreator() && !loggedUser.isAdmin()) return false;
 
         User user = userRepository.findByUsername(loggedUser.getUsername());
 
-        if (eventRepository.findById(id).orElse(null).getAddedBy().getId() != user.getId()) return false;
+        if (eventRepository.findById(id).orElse(null).getAddedBy().getId() != user.getId() && !loggedUser.isAdmin()) return false;
         eventRepository.deleteById(id);
 
         return true;
@@ -182,6 +182,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getEvent(Long id) {
         return eventRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Event> getAll() {
+        return eventRepository.findAll();
     }
 
     public boolean[] getFilters() {
