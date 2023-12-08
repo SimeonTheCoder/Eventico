@@ -4,7 +4,6 @@ import com.eventico.model.EventViewModel;
 import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
-import com.eventico.model.dto.EventDTO;
 import com.eventico.model.entity.Event;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface EventService {
 
     void filterSearch(BrowseSelectionFilterBinding binding);
 
-    List<EventDTO> getUserEvents();
+    List<Event> getUserEvents();
 
     boolean remove(Long id);
 

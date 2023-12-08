@@ -3,7 +3,6 @@ package com.eventico.controller;
 import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.exceptions.EventNotFoundException;
 import com.eventico.model.dto.EventAddBinding;
-import com.eventico.model.dto.EventDTO;
 import com.eventico.model.entity.Event;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
@@ -52,7 +51,7 @@ public class EventsController {
         return new ModelAndView(
                 "event-info",
                 "event",
-                new EventDTO(event)
+                event
         );
     }
 
@@ -65,7 +64,7 @@ public class EventsController {
         return new ModelAndView(
                 "event-info-min",
                 "event",
-                new EventDTO(event)
+                event
         );
     }
 

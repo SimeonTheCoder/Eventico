@@ -1,8 +1,7 @@
 package com.eventico.controller;
 
 import com.eventico.exceptions.AccessDeniedException;
-import com.eventico.exceptions.EventNotFoundException;
-import com.eventico.model.dto.EventDTO;
+import com.eventico.exceptions.ReportNotFoundException;
 import com.eventico.model.dto.EventReportBinding;
 import com.eventico.model.entity.Event;
 import com.eventico.model.entity.Report;
@@ -51,7 +50,7 @@ public class ReportController {
     public ModelAndView eventReportPageMinimal(@PathVariable("id") Long id) {
         Report report = reportService.getReport(id);
 
-        if(report == null) throw new EventNotFoundException();
+        if(report == null) throw new ReportNotFoundException();
 
         return new ModelAndView(
                 "event-report-min",

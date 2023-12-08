@@ -4,10 +4,10 @@ import com.eventico.model.EventViewModel;
 import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
-import com.eventico.model.dto.EventDTO;
 import com.eventico.model.entity.Event;
 import com.eventico.model.entity.User;
 import com.eventico.repo.EventRepository;
+import com.eventico.repo.ReportRepository;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
@@ -23,14 +23,16 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final ReportRepository reportRepository;
 
     private final LoggedUser loggedUser;
 
     private boolean[] filters = new boolean[9];
 
-    public EventServiceImpl(UserRepository userRepository, EventRepository eventRepository, LoggedUser loggedUser) {
+    public EventServiceImpl(UserRepository userRepository, EventRepository eventRepository, ReportRepository reportRepository, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.reportRepository = reportRepository;
         this.loggedUser = loggedUser;
 
         this.filters[8] = true;
@@ -67,13 +69,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventViewModel getHomeData() {
-        List<EventDTO> events = new ArrayList<>();
-
-        eventRepository.findAll().forEach((e) -> {
-            events.add(new EventDTO(e));
-        });
-
-        return new EventViewModel(events, this.filters);
+        return new EventViewModel(eventRepository.findAll(), this.filters);
     }
 
     @Override
@@ -94,9 +90,6 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
 
         loggedUser.login(user);
-
-//        userRepository.updateParticipationEventsById(user.getParticipationEvents(), user.getId());
-//        eventRepository.save(event);
 
         return true;
     }
@@ -123,8 +116,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDTO> getUserEvents() {
-        List<EventDTO> userEvents = new ArrayList<>();
+    public List<Event> getUserEvents() {
+        List<Event> userEvents = new ArrayList<>();
 
         if (loggedUser == null) return null;
         if (!loggedUser.isCreator()) return null;
@@ -132,7 +125,7 @@ public class EventServiceImpl implements EventService {
         userRepository.findByUsername(loggedUser.getUsername()).getAddedEvents()
                 .stream()
                 .forEach((e) -> {
-                    userEvents.add(new EventDTO(e));
+                    userEvents.add(e);
                 });
 
         return userEvents;
@@ -146,6 +139,14 @@ public class EventServiceImpl implements EventService {
         User user = userRepository.findByUsername(loggedUser.getUsername());
 
         if (eventRepository.findById(id).orElse(null).getAddedBy().getId() != user.getId() && !loggedUser.isAdmin()) return false;
+
+        reportRepository.findAll().stream()
+                .forEach((r) -> {
+                    if(r.getReportedEvent().getId().equals(id)) {
+                        reportRepository.deleteById(r.getId());
+                    }
+                });
+
         eventRepository.deleteById(id);
 
         return true;
@@ -155,8 +156,8 @@ public class EventServiceImpl implements EventService {
     public HomeFeedViewModel getEventsForUser(String username) {
         User user = userRepository.findByUsername(username);
 
-        List<EventDTO> userEvents = new ArrayList<>();
-        List<EventDTO> participating = new ArrayList<>();
+        List<Event> userEvents = new ArrayList<>();
+        List<Event> participating = new ArrayList<>();
 
         List<String> followedUsers = new ArrayList<>();
 
@@ -165,16 +166,16 @@ public class EventServiceImpl implements EventService {
         });
 
         user.getParticipationEvents().stream().forEach((e) -> {
-            participating.add(new EventDTO(e));
+            participating.add(e);
         });
 
         eventRepository.findAll().stream().forEach((e) -> {
             if(followedUsers.contains(e.getAddedBy().getUsername())) {
-                userEvents.add(new EventDTO(e));
+                userEvents.add(e);
             }
         });
 
-        userEvents.sort(Comparator.comparing(EventDTO::getStart));
+        userEvents.sort(Comparator.comparing(Event::getStart));
 
         return new HomeFeedViewModel(userEvents, participating);
     }

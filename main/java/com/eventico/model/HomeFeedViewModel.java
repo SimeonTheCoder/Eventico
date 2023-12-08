@@ -1,31 +1,31 @@
 package com.eventico.model;
 
-import com.eventico.model.dto.EventDTO;
+import com.eventico.model.entity.Event;
 
 import java.util.List;
 
 public class HomeFeedViewModel {
-    private List<EventDTO> foryou;
-    private List<EventDTO> participating;
+    private List<Event> foryou;
+    private List<Event> participating;
 
-    public HomeFeedViewModel(List<EventDTO> foryou, List<EventDTO> participating) {
+    public HomeFeedViewModel(List<Event> foryou, List<Event> participating) {
         this.foryou = foryou;
         this.participating = participating;
     }
 
-    public List<EventDTO> getForyou() {
+    public List<Event> getForyou() {
         return foryou;
     }
 
-    public void setForyou(List<EventDTO> foryou) {
+    public void setForyou(List<Event> foryou) {
         this.foryou = foryou;
     }
 
-    public List<EventDTO> getParticipating() {
+    public List<Event> getParticipating() {
         return participating;
     }
 
-    public void setParticipating(List<EventDTO> participating) {
+    public void setParticipating(List<Event> participating) {
         this.participating = participating;
     }
 }

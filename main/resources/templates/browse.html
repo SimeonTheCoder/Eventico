@@ -3,48 +3,9 @@
 
 <head>
     <head th:replace="~{fragments/common::head}"></head>
-
+    <script src="scripts/popup.js"></script>
     <script>
-        window.addEventListener('load', function () {
-            document.getElementById("close-btn").onclick = function(e) { return myHandler(e); };
-            document.getElementById("close-btn2").onclick = function(e) { return myHandler(e); };
-            [...document.getElementsByClassName("event-link")].forEach(element => {
-                element.onclick = function() { return openEmbed(element.id); };
-            });
-            [...document.getElementsByClassName("report-btn")].forEach(element => {
-                element.onclick = function() { return openReport(element.id.split("")[0]); };
-            });
-        });
-
-        function myHandler(event) {
-            document.getElementById("page-display").style.visibility = "hidden";
-            document.getElementById("page-display2").style.visibility = "hidden";
-            event.preventDefault();
-        }
-
-        async function openEmbed(id) {
-            document.getElementById("frame").src = "/event-info-min/" + id;
-            await sleep(100);
-            document.getElementById("page-display").style.visibility = "visible";
-        }
-
-        async function openReport(id) {
-            document.getElementById("frame-report").src = "/report/" + id;
-            await sleep(100);
-            document.getElementById("page-display2").style.visibility = "visible";
-        }
-
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        window.onmessage = async function(e) {
-            await sleep(1000);
-
-            if (e.data == 'done') {
-                document.getElementById("page-display2").style.visibility = "hidden";
-            }
-        };
+        document.getElementById("close-btn2").onclick = function(e) { return myHandler(e); };
     </script>
 </head>
 
