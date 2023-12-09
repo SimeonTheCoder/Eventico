@@ -32,6 +32,10 @@ public class EventResponseDTO extends RepresentationModel<EventResponseDTO> {
         Base64.Encoder encoder = Base64.getEncoder();
     }
 
+    public EventResponseDTO() {
+
+    }
+
     @JsonCreator
     public EventResponseDTO(@JsonProperty("id") Long id,
                             @JsonProperty("name") String name,

@@ -72,7 +72,7 @@ public class UserController {
             return newView;
         }
 
-        return new ModelAndView("login");
+        return new ModelAndView("login", "userLoginBindingModel", new UserLoginBinding());
     }
 
     @GetMapping("/account")

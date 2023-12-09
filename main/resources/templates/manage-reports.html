@@ -46,8 +46,8 @@
                         <span th:text="${currReport.description}"></span>
                     </p>
                     <p>
-                        <span th:text="${currReport.reportTime}"></span> by <span
-                            th:text="${currReport.reportedBy}"></span>
+                        <span th:text="${#temporals.format(currReport.reportTime, 'dd/MM/YY HH:mm')}"></span> by <span
+                            th:text="${currReport.reportedBy.username}"></span>
                     </p>
                 </div>
 

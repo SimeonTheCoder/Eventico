@@ -1,4 +1,9 @@
 spring:
+  http:
+    multipart:
+      enabled: true
+      max -file- size: 30MB
+      max -request-size: 30MB
   jpa:
     properties:
       hibernate:

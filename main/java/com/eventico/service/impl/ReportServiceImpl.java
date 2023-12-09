@@ -3,6 +3,7 @@ package com.eventico.service.impl;
 import com.eventico.model.dto.EventReportBinding;
 import com.eventico.model.entity.Event;
 import com.eventico.model.entity.Report;
+import com.eventico.repo.CityRepository;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.ReportRepository;
 import com.eventico.repo.UserRepository;
@@ -20,12 +21,14 @@ public class ReportServiceImpl implements ReportService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final ReportRepository reportRepository;
+    private final CityRepository cityRepository;
     private final LoggedUser loggedUser;
 
-    public ReportServiceImpl(EventRepository eventRepository, UserRepository userRepository, ReportRepository reportRepository, LoggedUser loggedUser) {
+    public ReportServiceImpl(EventRepository eventRepository, UserRepository userRepository, ReportRepository reportRepository, CityRepository cityRepository, LoggedUser loggedUser) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.reportRepository = reportRepository;
+        this.cityRepository = cityRepository;
         this.loggedUser = loggedUser;
     }
 
@@ -69,6 +72,9 @@ public class ReportServiceImpl implements ReportService {
                  reportRepository.deleteById(r.getId());
              }
         });
+
+        event.getCity().getEvents().remove(event);
+        cityRepository.save(event.getCity());
 
         eventRepository.deleteById(event.getId());
 

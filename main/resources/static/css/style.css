@@ -28,6 +28,11 @@ body {
     color: var(--secondary-color);
 }
 
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
 .generic-gradient {
     background: linear-gradient(0deg, var(--lgreen), transparent);
 }

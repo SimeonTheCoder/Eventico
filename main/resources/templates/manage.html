@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="buy-section">
-                    <h2><span th:text="${currEvent.cost}"></span> participants</h2>
+                    <h2><span th:text="${currEvent.participants.size()}"></span> participants</h2>
                     <a th:href="@{/remove/{id}(id=${currEvent.id})}"><input
                             style="margin-top: 40px; background-color: red;" type="button" value="Remove"
                             class="btn"></a>

@@ -19,7 +19,7 @@ public class City extends BaseEntity{
     @Column(unique = true)
     private String coordinates;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Event> events;
 
     public City() {

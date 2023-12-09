@@ -162,6 +162,11 @@ public class EventServiceImpl implements EventService {
                     }
                 });
 
+        Event event = eventRepository.findById(id).orElse(null);
+        event.getCity().getEvents().remove(event);
+
+        cityRepository.save(event.getCity());
+
         eventRepository.deleteById(id);
 
         return true;

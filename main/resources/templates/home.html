@@ -12,7 +12,7 @@
         </div>
 
         <div style="display: flex; overflow-x: auto">
-            <div th:each="currEvent : ${feed.participating}" class="card-container">
+            <div th:each="currEvent : ${feed.participating}" class="card-container" style="height: 600px;">
                 <div class="card">
                     <img th:src="@{/api/event/image(id=${currEvent.id})}">
                     <h1>
@@ -38,7 +38,7 @@
         </div>
 
         <div style="display: flex; overflow-x: auto">
-            <div th:each="currEvent : ${feed.foryou}" class="card-container">
+            <div th:each="currEvent : ${feed.foryou}" class="card-container" style="height: 600px;">
                 <div class="card">
                     <img th:src="@{/api/event/image(id=${currEvent.id})}">
                     <h1>
