@@ -7,21 +7,28 @@
     <div class="all-content" style="min-height: 94%; margin-bottom: -40px;">
         <header th:replace="~{fragments/common::nav}"></header>
 
-        <h1>
-            Redeem code
-        </h1>
+        <div style="display: flex; justify-content: space-around; align-items: center;">
+            <div style="width: 800px;">
+                <h1>
+                    Redeem code
+                </h1>
 
-        <p>
-            Redeem code to gain points
-        </p>
+                <p>
+                    Redeem code to gain points
+                </p>
 
-        <form th:method="POST" th:action="@{/redeem}">
-            <label>Code: </label>
-            <input type="text" name="code">
-            <br>
+                <form th:method="POST" th:action="@{/redeem}">
+                    <label>Code: </label>
+                    <input type="text" name="code">
+                    <br>
 
-            <input type="submit" value="Redeem code" id="redeem-btn">
-        </form>
+                    <input type="submit" value="Redeem code" id="redeem-btn">
+                </form>
+            </div>
+            <div style="font-size: 450px;">
+                🪙
+            </div>
+        </div>
     </div>
 
     <footer th:replace="~{fragments/common::footer}"></footer>

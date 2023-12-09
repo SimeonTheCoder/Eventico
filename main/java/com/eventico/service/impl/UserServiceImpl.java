@@ -3,7 +3,6 @@ package com.eventico.service.impl;
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
 import com.eventico.model.entity.User;
-import com.eventico.model.enums.UserRoles;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.LoggedUser;

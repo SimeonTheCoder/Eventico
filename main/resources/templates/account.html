@@ -1,24 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 94%;" lang="en">
 
 <head th:replace="~{fragments/common::head}"></head>
 
-<body>
-    <header th:replace="~{fragments/common::nav}"></header>
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
 
-    <h1>
-        <span th:text="${user.username}"/>
-    </h1>
+        <div style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            height: 700px;
+        ">
+            <h1 class="icon" style="font-size: 500px;">
+                👤
+            </h1>
 
-    <p>
-        Email: <span th:text="${user.email}"/> <br>
-        <span th:text="${user.points}"/> points
-    </p>
+            <div style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 800px;
+                    background: linear-gradient(0deg, lightgreen, transparent);
+                    padding: 30px;
+                    height: 450px;
+                    border-radius: 40px;
+                ">
+                <h1>
+                    <span th:text="${user.username}" />
+                </h1>
 
-    <form th:method="POST" th:action="@{/logout}">
-        <input type="submit" value="Log out">
-    </form> 
+                <p>
+                    Email: <span th:text="${user.email}" /> <br><br>
+                    <span th:text="${user.points}" /> points
+                    <a style="background-color: yellow; color: black; border-radius: 20px; padding: 10px;" th:href="@{/redeem}">Redeem points</a>
+                </p>
+
+                <form th:method="POST" th:action="@{/logout}">
+                    <input type="submit" value="Log out">
+                </form>
+            </div>
+        </div>
+    </div>
 
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>
+
 </html>

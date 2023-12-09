@@ -9,10 +9,7 @@ import com.eventico.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -59,7 +56,7 @@ public class UserController {
         return new ModelAndView("/account", "user", userService.findByUsername(loggedUser.getUsername()));
     }
 
-    @PostMapping("/logout")
+    @RequestMapping("/logout")
     public String logout() {
         if(!loggedUser.isLogged()) throw new AccessDeniedException();
 

@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 94%;" lang="en">
 
 <head>
 
     <head th:replace="~{fragments/common::head}"></head>
 </head>
 
-<body>
-    <header th:replace="~{fragments/common::nav}"></header>
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
 
-    <div th:each="currEvent : ${events}">
-        <div th:if="${currEvent.addedBy.username == @loggedUser.username or @loggedUser.isAdmin}" class="event-listing">
-            <div class="container-image">
-                <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}" alt="Image">
-            </div>
+        <h1>
+            <span style="font-size: 50px;">Manage events</span>
+            <a style="font-size: 20px; background-color: yellow; border-radius: 20px; text-decoration: none; color: black;" th:href="@{/add-event}">Host event</a>
+        </h1>
 
-            <div class="listing-content">
-                <h1>
-                    <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span th:text="${currEvent.name}"></span></a>
-                </h1>
-                <p>
-                    <span th:text="${currEvent.category}"></span>
-                </p>
-                <p>
-                    <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>
-                </p>
-            </div>
+        <div th:each="currEvent : ${events}">
+            <div th:if="${currEvent.addedBy.username == @loggedUser.username or @loggedUser.isAdmin}"
+                class="event-listing">
+                <div class="container-image">
+                    <img th:src="@{/api/event/image(id=${currEvent.id})}" alt="Image">
+                </div>
 
-            <div class="buy-section">
-                <h2><span th:text="${currEvent.cost}"></span> participants</h2>
-                <a th:href="@{/remove/{id}(id=${currEvent.id})}"><input style="margin-top: 40px; background-color: red;" type="button"
-                        value="Remove" class="btn"></a>
+                <div class="listing-content">
+                    <h1>
+                        <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span
+                                th:text="${currEvent.name}"></span></a>
+                    </h1>
+                    <p>
+                        <span th:text="${currEvent.category}"></span>
+                    </p>
+                    <p>
+                        <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>
+                    </p>
+                </div>
+
+                <div class="buy-section">
+                    <h2><span th:text="${currEvent.cost}"></span> participants</h2>
+                    <a th:href="@{/remove/{id}(id=${currEvent.id})}"><input
+                            style="margin-top: 40px; background-color: red;" type="button" value="Remove"
+                            class="btn"></a>
+                </div>
             </div>
         </div>
     </div>

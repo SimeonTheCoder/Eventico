@@ -6,14 +6,11 @@
 <head>
     <script>
         window.addEventListener('load', function () {
-            document.getElementById("report-btn").onclick = function(e) { return myHandler(e); };
+            document.getElementById("form").onsubmit = function(e) { return myHandler(e); };
         });
 
         function myHandler(e) {
             window.top.postMessage('done', '*');
-
-            document.getElementById('form').remove();
-            document.getElementById('title').innerHTML = '<br><br><br> Report submitted!';
         }
     </script>
 </head>

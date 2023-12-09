@@ -42,8 +42,6 @@ function sleep(ms) {
 }
 
 window.onmessage = async function(e) {
-    await sleep(1000);
-
     if (e.data == 'done') {
         document.getElementById("page-display2").style.visibility = "hidden";
     }

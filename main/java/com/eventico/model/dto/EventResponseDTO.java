@@ -1,11 +1,14 @@
 package com.eventico.model.dto;
 
 import com.eventico.model.entity.Event;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.Base64;
 
-public class EventResponseDTO {
+public class EventResponseDTO extends RepresentationModel<EventResponseDTO> {
     private Long id;
     private String name;
     private String description;
@@ -27,6 +30,27 @@ public class EventResponseDTO {
         this.category = String.valueOf(event.getCategory());
         this.addedBy = event.getAddedBy().getUsername();
         Base64.Encoder encoder = Base64.getEncoder();
+    }
+
+    @JsonCreator
+    public EventResponseDTO(@JsonProperty("id") Long id,
+                            @JsonProperty("name") String name,
+                            @JsonProperty("description") String description,
+                            @JsonProperty("addedBy") String addedBy,
+                            @JsonProperty("category") String category,
+                            @JsonProperty("cost") int cost,
+                            @JsonProperty("location") String location,
+                            @JsonProperty("start") LocalDateTime start,
+                            @JsonProperty("end") LocalDateTime end) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.addedBy = addedBy;
+        this.category = category;
+        this.cost = cost;
+        this.location = location;
+        this.start = start;
+        this.end = end;
     }
 
     public String getName() {

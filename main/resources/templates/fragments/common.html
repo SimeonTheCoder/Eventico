@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -20,8 +21,8 @@
             </div>
 
             <div>
-                <a th:if="${@loggedUser.logged}" th:href="@{/home}">Home</a>
-                <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Home</a>
+                <!-- <a th:if="${@loggedUser.logged}" th:href="@{/home}">Home</a> -->
+                <!-- <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Home</a> -->
                 <a th:href="@{/browse}">Browse</a>
                 <a th:if="${@loggedUser.creator}" th:href="@{/add-event}">Host event</a>
                 <a th:if="${@loggedUser.creator}" th:href="@{/manage}">Manage events</a>
@@ -33,6 +34,9 @@
             <div>
                 <a th:if="${@loggedUser.logged}" th:href="@{/account}">
                     <span th:text="${@loggedUser.username}"/>
+                </a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/logout}">
+                    <i class="fa fa-sign-out"></i>
                 </a>
                 <div th:unless="${@loggedUser.logged}">
                     <a th:href="@{/login}">Login</a>

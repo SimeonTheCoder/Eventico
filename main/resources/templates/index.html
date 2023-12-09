@@ -3,21 +3,64 @@
 
 <head th:replace="~{fragments/common::head}"></head>
 
-<body style="height: 94%">
+<head>
+    <script>
+        var emojis = ["🪅", "🧬", "🔭", "🎡", "🏎️", "📓", "🥇"];
+        var index = 0;
+        var elem = document.getElementById("emoji");
+        //var inst = setInterval(swap, 1000);
+
+        window.addEventListener('load', function () {
+            elem = document.getElementById("emoji")
+            setInterval(swap, 3000);
+        });
+
+        function swap() {
+            index ++;
+            elem.innerHTML = emojis[index];
+            if(index >= emojis.length - 1) index = -1;
+            //setInterval(swap, 1000);
+        }
+    </script>
+</head>
+
+<body style="height: 85%">
     <div class="all-content">
         <header th:replace="~{fragments/common::nav}"></header>
-        <div class="container">
-            <h1 style="padding: 20px; font-size: 60px;">
-                Welcome to Eventico!
-            </h1>
+        <div style="margin-top: 100px;">
+            <div class="container">
+                <div>
+                    <h1 style="padding: 20px; font-size: 60px;">
+                        Welcome to Eventico!
+                    </h1>
 
-            <p>
-                The ultimate event manager! Browse events, add events, manage your time and have fun while at it!
-            </p>
+                    <p>
+                        The ultimate event manager! Browse and host events, manage your time and have fun while at
+                        it!<br>
+                        <span style="font-size: 40px; font-weight: 900;">Choose your own adventure.</span>
+                    </p>
 
-            <p>
-                <a style="padding: 0px;" th:href="@{/login}">Login</a> if you have an account or <a style="padding: 0px;" th:href="@{/register}">Register</a>.
-            </p>
+                    <p>
+                        <a style="padding: 0px;" th:href="@{/login}">Login</a> if you have an account or <a
+                            style="padding: 0px;" th:href="@{/register}">Register</a>.
+                    </p>
+                </div>
+                <div id="emoji" class="icon" style="display: flex;
+                align-items: center;
+                padding: 0px;
+                margin-top: -150px;">
+                    <!-- 🎫 -->
+                    <!-- 🫱🏼‍🫲🏻 -->
+                    🪅
+                    <!-- 🧬 -->
+                    <!-- 🔭 -->
+                    <!-- 🎡 -->
+                    <!-- 🏎️ -->
+                    <!-- 📓 -->
+                    <!-- 🥇 -->
+                    <!-- 🎈 -->
+                </div>
+            </div>
         </div>
     </div>
     <footer th:replace="~{fragments/common::footer}"></footer>

@@ -1,13 +1,13 @@
 package com.eventico.api;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import com.eventico.model.dto.EventResponseDTO;
 import com.eventico.model.entity.Event;
 import com.eventico.repo.EventRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +21,29 @@ public class EventAPI {
         this.eventRepository = eventRepository;
     }
 
-    @GetMapping("/event/{id}")
-    public ResponseEntity<EventResponseDTO> findById(@PathVariable(value = "id") Long id) {
+    @GetMapping("/event")
+    public ResponseEntity<EventResponseDTO> findById(@RequestParam(value = "id") Long id) {
         Event event = eventRepository.findById(id).orElse(null);
 
-        if (event == null) {
+        if(event == null) {
             return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(new EventResponseDTO(event));
         }
+
+        EventResponseDTO eventResponseDTO = new EventResponseDTO(
+                event.getId(),
+                event.getName(),
+                event.getDescription(),
+                event.getAddedBy().getUsername(),
+                event.getCategory().toString(),
+                event.getCost(),
+                event.getLocation(),
+                event.getStart(),
+                event.getEnd()
+        );
+
+        eventResponseDTO.add(linkTo(methodOn(EventAPI.class).findById(id)).withSelfRel());
+
+        return new ResponseEntity<>(eventResponseDTO, HttpStatus.OK);
     }
 
     @GetMapping("events/all")
@@ -48,8 +62,8 @@ public class EventAPI {
         }
     }
 
-    @GetMapping("event/image/{id}")
-    public ResponseEntity<byte[]> findImageById(@PathVariable(value = "id") Long id) {
+    @GetMapping("event/image")
+    public ResponseEntity<byte[]> findImageById(@RequestParam(value = "id") Long id) {
         Event event = eventRepository.findById(id).orElse(null);
 
         if (event == null) {

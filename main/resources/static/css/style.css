@@ -4,6 +4,10 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+.icon{
+    font-size: 450px;
+}
+
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -92,7 +96,7 @@ form {
 .form-div {
     padding: 20px;
 
-    padding-top: 60px;
+    padding-top: 40px;
     padding-bottom: 60px;
 
     margin: 20px;
@@ -153,11 +157,9 @@ img {
     padding-top: 80px;
     padding-bottom: 80px;
 
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
     grid-gap: 20px;
 
-    width: 1200px;
     margin: auto;
     justify-content: center;
 }
@@ -165,7 +167,7 @@ img {
 .coming-events-container {
     padding: 20px;
 
-    background: linear-gradient(359deg, lightgreen, #ffff0069);
+    /* background: linear-gradient(359deg, lightgreen, #ffff0069); */
     margin: 40px;
     border-radius: 20px;
 }
@@ -176,6 +178,11 @@ img {
     background: linear-gradient(359deg, lightgreen, transparent);
     margin: 40px;
     border-radius: 20px;
+
+    display: flex;
+    justify-content: space-around;
+
+    height: 450px;
 }
 
 .coming-events-container h1{

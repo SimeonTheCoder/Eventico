@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 94%" lang="en">
 
 <head th:replace="~{fragments/common::head}"></head>
 
-<body>
-    <header th:replace="~{fragments/common::nav}"></header>
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
 
-    <div class="form-div">
-        <div class="form-content">
-            <h1>
-                Log in
-            </h1>
+        <div class="form-div">
+            <div class="form-content">
+                <h1>
+                    Log in
+                </h1>
 
-            <p>
-                <a th:href="@{/register}">Register</a> if you don't have an account.
-            </p>
+                <p>
+                    <a th:href="@{/register}">Register</a> if you don't have an account.
+                </p>
 
-            <div class="form-container">
-                <form th:method="POST" th:action="@{/login}">
-                    <label>Username:</label>
-                    <input type="text" name="username">
+                <div class="form-container">
+                    <form th:method="POST" th:action="@{/login}">
+                        <label>Username:</label>
+                        <input type="text" name="username">
 
-                    <label>Password:</label>
-                    <input type="password" name="password">
+                        <label>Password:</label>
+                        <input type="password" name="password">
 
-                    <input type="submit" value="Log in" class="btn">
-                </form>
+                        <input type="submit" value="Log in" class="btn">
+                    </form>
+                </div>
             </div>
+
+            <h1 class="big-text">
+                Welcome to Eventico!
+            </h1>
         </div>
-
-        <h1 class="big-text">
-            Welcome to Eventico!
-        </h1>
     </div>
-
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>
 

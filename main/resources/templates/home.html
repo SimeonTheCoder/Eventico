@@ -8,13 +8,13 @@
 
     <div class="coming-events-container">
         <div class="center">
-            <h1>Your upcoming events</h1>
+            <h1>You're participating in...</h1>
         </div>
 
         <div style="display: flex; overflow-x: auto">
             <div th:each="currEvent : ${feed.participating}" class="card-container">
                 <div class="card">
-                    <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}">
+                    <img th:src="@{/api/event/image(id=${currEvent.id})}">
                     <h1>
                         <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span
                                 th:text="${currEvent.name}"></span></a>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="coming-events-container">
+    <div style="background-color: lightgreen;" class="coming-events-container">
         <div class="center">
             <h1>For you</h1>
         </div>
@@ -40,7 +40,7 @@
         <div style="display: flex; overflow-x: auto">
             <div th:each="currEvent : ${feed.foryou}" class="card-container">
                 <div class="card">
-                    <img th:src="@{/api/event/image/{id}(id=${currEvent.id})}">
+                    <img th:src="@{/api/event/image(id=${currEvent.id})}">
                     <h1>
                         <a th:href="@{/event-info/{id}(id=${currEvent.id})}"><span
                                 th:text="${currEvent.name}"></span></a>
