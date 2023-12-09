@@ -1,10 +1,53 @@
+:root {
+    --primary-color: white;
+    --secondary-color: black;
+    --third-color: lightgrey;
+    --yellow: rgb(171, 171, 0);
+    --yellow2: rgb(255, 255, 0);
+    --lgreen: lightgreen;
+    --shadow-color: #00000036;
+    --shadow-color2:rgba(0, 0, 0, 0.525)6;
+}
+
+.dark{
+    --primary-color: black;
+    --secondary-color: white;
+    --third-color: rgb(53, 53, 53);
+    --shadow-color: #ffffff36;
+    --shadow-color2:rgba(255, 255, 255, 0.525)6;
+    --yellow: rgb(64, 64, 0);
+    --yellow2: rgb(64, 64, 0);
+    --lgreen: rgba(0, 100, 0, 0.418);
+}
+
 body {
+    background: var(--primary-color);
     padding-top: 60px;
     font-size: 20px;
     font-family: 'Raleway', sans-serif;
+    color: var(--secondary-color);
 }
 
-.icon{
+.generic-gradient {
+    background: linear-gradient(0deg, var(--lgreen), transparent);
+}
+
+.text-danger {
+    color: red;
+}
+
+.bg-danger {
+    background-color: rgb(127, 29, 29);
+    color: white;
+}
+
+input, select {
+    background: var(--third-color);
+    color: var(--secondary-color);
+    border-width: 0px;
+}
+
+.icon {
     font-size: 450px;
 }
 
@@ -22,7 +65,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: yellow;
+    background: var(--yellow);
 }
 
 h1 {
@@ -48,8 +91,8 @@ nav {
     border-radius: 20px;
 
     /* background-color: green; */
-    background: linear-gradient(45deg, green, #a2a200);
-    color: white;
+    background: linear-gradient(45deg, green, var(--yellow));
+    color: var(--primary-color);
 
     position: fixed;
     top: 10px;
@@ -75,7 +118,7 @@ form {
 
     margin: 20px;
 
-    box-shadow: #00000036 0px 0px 200px 0px;
+    box-shadow: var(--shadow-color) 0px 0px 200px 0px;
     border-radius: 20px;
     padding: 20px;
     background-color: transparent;
@@ -104,13 +147,13 @@ form {
 
     border-radius: 20px;
 
-    background: linear-gradient(90deg, lightgreen, transparent);
+    background: linear-gradient(90deg, var(--lgreen), transparent);
 
     display: flex;
     align-items: center;
     justify-content: space-around;
 
-    box-shadow: #00000052 0px 0px 50px 0px;
+    box-shadow: var(--shadow-color) 0px 0px 50px 0px;
 }
 
 .btn {
@@ -138,8 +181,8 @@ img {
 }
 
 .card {
-    background: linear-gradient(180deg, white, transparent);
-    box-shadow: #00000052 0px 0px 50px 0px;
+    background: linear-gradient(180deg, var(--primary-color), transparent);
+    box-shadow: var(--shadow-color) 0px 0px 50px 0px;
 
     border-radius: 0px 0px 20px 20px;
 
@@ -149,7 +192,7 @@ img {
 }
 
 .card:hover {
-    background: white;
+    background: var(--primary-color);
 }
 
 .card-container {
@@ -167,7 +210,7 @@ img {
 .coming-events-container {
     padding: 20px;
 
-    /* background: linear-gradient(359deg, lightgreen, #ffff0069); */
+    /* background: linear-gradient(359deg, var(--lgreen), #ffff0069); */
     margin: 40px;
     border-radius: 20px;
 }
@@ -175,7 +218,7 @@ img {
 .container {
     padding: 20px;
 
-    background: linear-gradient(359deg, lightgreen, transparent);
+    background: linear-gradient(359deg, var(--lgreen), transparent);
     margin: 40px;
     border-radius: 20px;
 
@@ -185,7 +228,7 @@ img {
     height: 450px;
 }
 
-.coming-events-container h1{
+.coming-events-container h1 {
     padding: 0px;
 }
 
@@ -195,29 +238,39 @@ img {
 }
 
 .container-image {
-    width: 300px;
-    height: 300px;
+    width: 400px;
     transition: width 0.2s;
 }
 
 .container-image:hover {
-    width: 450px;
+    width: 500px;
 }
 
 .event-listing {
     display: flex;
     justify-content: space-between;
 
-    background: linear-gradient(90deg, white, transparent);
-    box-shadow: #0000004a 0px 0px 200px 0px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+    box-shadow: var(--shadow-color) 0px 0px 200px 0px;
 
     margin: 20px;
+
+    height: 350px;
 
     border-radius: 20px;
 }
 
+.event-listing p {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.event-listing a {
+    padding-left: 0px;
+}
+
 .event-listing:hover {
-    background: linear-gradient(90deg, white, yellow);
+    background: linear-gradient(90deg, var(--primary-color), var(--yellow2));
 }
 
 .buy-section {
@@ -231,11 +284,11 @@ img {
 }
 
 .event-card {
-    background: white;
+    background: var(--primary-color);
     margin-top: -32px;
     padding: 20px;
     border-radius: 20px;
-    box-shadow: #6f6f6f 0px 0px 50px 0px;
+    box-shadow: var(--shadow-color) 0px 0px 50px 0px;
 }
 
 select {
@@ -270,7 +323,7 @@ select {
     display: flex;
     justify-content: space-around;
     padding: 60px;
-    background: linear-gradient(0deg, lightgreen, transparent);
+    background: linear-gradient(0deg, var(--lgreen), transparent);
     border-radius: 20px;
     box-shadow: #00000040 0px 0px 50px 0px;
     margin: 40px;

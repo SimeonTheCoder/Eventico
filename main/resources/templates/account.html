@@ -18,18 +18,18 @@
                 👤
             </h1>
 
-            <div style="
+            <div class="generic-gradient" style="
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     width: 800px;
-                    background: linear-gradient(0deg, lightgreen, transparent);
                     padding: 30px;
                     height: 450px;
                     border-radius: 40px;
                 ">
-                <h1>
+                <h1 style="display: flex; align-items: center;">
                     <span th:text="${user.username}" />
+                    <img style="width: 50px; height: 50px; margin-left: 10px;" th:src="@{'https://flagsapi.com/' + ${user.country.flag} + '/shiny/64.png'}">
                 </h1>
 
                 <p>

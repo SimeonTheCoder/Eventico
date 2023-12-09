@@ -2,11 +2,14 @@ package com.eventico.service.impl;
 
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
+import com.eventico.model.entity.Country;
 import com.eventico.model.entity.User;
+import com.eventico.repo.CountryRepository;
 import com.eventico.repo.EventRepository;
 import com.eventico.repo.UserRepository;
 import com.eventico.service.LoggedUser;
 import com.eventico.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +19,21 @@ import java.util.ArrayList;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final CountryRepository countryRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final LoggedUser loggedUser;
 
-    public UserServiceImpl(UserRepository userRepository, EventRepository eventRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
+    public UserServiceImpl(UserRepository userRepository, EventRepository eventRepository, CountryRepository countryRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.countryRepository = countryRepository;
         this.passwordEncoder = passwordEncoder;
         this.loggedUser = loggedUser;
     }
 
     @Override
+    @Transactional
     public boolean register(UserRegisterBinding binding) {
         if(!binding.getPassword().equals(binding.getRepeat())) return false;
         if(userRepository.findByUsername(binding.getUsername()) != null) return false;
@@ -43,6 +49,13 @@ public class UserServiceImpl implements UserService {
         user.setPoints(0);
         user.setParticipationEvents(new ArrayList<>());
         user.setAddedEvents(new ArrayList<>());
+
+        Country country = countryRepository.findByName(binding.getCountry());
+
+        if(country == null) return false;
+
+        user.setCountry(country);
+        country.getUsers().add(user);
 
         userRepository.save(user);
 

@@ -29,6 +29,10 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private int points;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
     @OneToMany(mappedBy = "addedBy", fetch = FetchType.EAGER)
     private List<Event> addedEvents;
 
@@ -37,6 +41,13 @@ public class User extends BaseEntity{
 
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Event> participationEvents;
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public User() {
         participationEvents = new ArrayList<>();

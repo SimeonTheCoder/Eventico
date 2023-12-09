@@ -13,22 +13,38 @@
             </h1>
 
             <div class="form-container">
-                <form th:method="POST" th:action="@{/register}" class="form-4">
+                <div th:if="${error}" class="text-danger">
+                    Registration failed
+                </div>
+                
+                <form th:object="${userRegisterBindingModel}" th:method="POST" th:action="@{/register}" class="form-4">
                     <label>Username:</label>
-                    <input type="text" name="username">
+                    <input th:field="*{username}" type="text" name="username" th:errorclass="bg-danger">
+                    <br th:if="${#fields.hasErrors('username')}">
+                    <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Username error message</small>
 
                     <label>Email:</label>
-                    <input type="email" name="email">
+                    <input th:field="*{email}" type="email" name="email" th:errorclass="bg-danger">
+                    <br th:if="${#fields.hasErrors('email')}">
+                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Email error message</small>
 
                     <label>Password:</label>
-                    <input type="password" name="password">
+                    <input th:field="*{password}" type="password" name="password" th:errorclass="bg-danger">
+                    <br th:if="${#fields.hasErrors('password')}">
+                    <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Password error message</small>
 
                     <label>Repeat password:</label>
-                    <input type="password" name="repeat">
+                    <input th:field="*{repeat}" type="password" name="repeat" th:errorclass="bg-danger">
+                    <br th:if="${#fields.hasErrors('repeat')}">
+                    <small th:if="${#fields.hasErrors('repeat')}" th:errors="*{repeat}" class="text-danger">Repeat error message</small>
+
+                    <label>Country:</label>
+                    <select id="country" name="country">
+                        <option th:each="country : ${countries}" th:value="${country.name}"><span th:text="${country.name}"></span></option>
+                    </select>
 
                     <label>Your role:</label>
                     <select id="role" name="role">
-                        <option value="">Select role</option>
                         <option value="USER">User</option>
                         <option value="CREATOR">Creator</option>
                     </select>

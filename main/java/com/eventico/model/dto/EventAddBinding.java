@@ -4,17 +4,21 @@ import com.eventico.model.enums.EventCategory;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
 public class EventAddBinding {
+    @Size(min = 3, max = 20, message = "Event title must be between 3 and 20 characters!")
     @Column(nullable = false)
     private String name;
 
+    @Size(min = 3, message = "Event description must be at least 3 characters!")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Min(value = 0, message = "Negative amount impossible!")
     @Column(nullable = false)
     private int cost;
 
@@ -22,15 +26,25 @@ public class EventAddBinding {
     @Column(nullable = false)
     private EventCategory category;
 
+    @PastOrPresent(message = "Event start must be in the future!")
     @Column(nullable = false)
     private LocalDateTime start;
 
+    @PastOrPresent(message = "Event end must be in the future!")
     @Column(nullable = false)
     private LocalDateTime end;
 
     @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
+    private String city;
+
+    @NotBlank(message = "Location must not be blank!")
+    @Column(nullable = false)
     private String location;
 
+    @NotNull(message = "You must upload an image!")
     MultipartFile filename;
 
     public String getName() {
@@ -95,5 +109,21 @@ public class EventAddBinding {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

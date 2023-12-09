@@ -3,6 +3,7 @@ package com.eventico.controller;
 import com.eventico.exceptions.AccessDeniedException;
 import com.eventico.model.dto.UserLoginBinding;
 import com.eventico.model.dto.UserRegisterBinding;
+import com.eventico.service.CountryService;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
 import com.eventico.service.UserService;
@@ -16,12 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     private final LoggedUser loggedUser;
     private final UserService userService;
-    private final EventService eventsService;
+    private final CountryService countryService;
+    private final EventService eventService;
 
-    public UserController(LoggedUser loggedUser, UserService userService, EventService eventsService) {
+    public UserController(LoggedUser loggedUser, UserService userService, CountryService countryService, EventService eventsService) {
         this.loggedUser = loggedUser;
         this.userService = userService;
-        this.eventsService = eventsService;
+        this.countryService = countryService;
+        this.eventService = eventsService;
     }
 
     @GetMapping("/login")
@@ -30,23 +33,46 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginForm(@ModelAttribute("userRegisterBindingModel") @Valid UserLoginBinding userLoginBindingModel, BindingResult bindingResult) {
-        boolean result = userService.login(userLoginBindingModel);
+    public ModelAndView loginForm(@ModelAttribute("userLoginBindingModel") @Valid UserLoginBinding userLoginBindingModel, BindingResult bindingResult) {
+        boolean error;
 
-        System.out.println(result ? "Success" : "Error");
+        try{
+            error = !userService.login(userLoginBindingModel);
+        }catch(Exception e){
+            error = true;
+        }
 
-        return "redirect:/home";
+        if(error){
+            return new ModelAndView("/login", "error", error);
+        }
+
+        return new ModelAndView("home", "feed", eventService.getEventsForUser(loggedUser.getUsername()));
     }
 
     @GetMapping("/register")
     public ModelAndView registerPage(@ModelAttribute("userRegisterBindingModel") UserRegisterBinding userRegisterBindingModel) {
-        return new ModelAndView("/register");
+        return new ModelAndView("/register", "countries", countryService.getAll());
     }
 
     @PostMapping("/register")
-    public String registerForm(@ModelAttribute("userRegisterBindingModel") @Valid UserRegisterBinding userRegisterBindingModel, BindingResult bindingResult) {
-        userService.register(userRegisterBindingModel);
-        return "redirect:/login";
+    public ModelAndView registerForm(@ModelAttribute("userRegisterBindingModel") @Valid UserRegisterBinding userRegisterBindingModel, BindingResult bindingResult) {
+        boolean error = false;
+
+        try {
+            error = !userService.register(userRegisterBindingModel);
+        }catch (Exception exception) {
+            error = true;
+        }
+
+        if(error) {
+            ModelAndView newView = new ModelAndView("/register");
+            newView.addObject("countries", countryService.getAll());
+            newView.addObject("error", error);
+
+            return newView;
+        }
+
+        return new ModelAndView("login");
     }
 
     @GetMapping("/account")

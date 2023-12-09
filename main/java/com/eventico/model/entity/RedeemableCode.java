@@ -1,13 +1,13 @@
 package com.eventico.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "codes")
 public class RedeemableCode extends BaseEntity{
     @NotNull
+    @Column(unique = true)
     private String code;
     @NotNull
     private boolean used;

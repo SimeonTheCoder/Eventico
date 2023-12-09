@@ -5,13 +5,10 @@
 
     <head th:replace="~{fragments/common::head}"></head>
     <script src="scripts/popup.js"></script>
-    <script>
-        document.getElementById("close-btn2").onclick = function (e) { return myHandler(e); };
-    </script>
 </head>
 
 <body style="height: 94%;">
-    <div class="all-content">
+    <div class="all-content" style="margin-bottom: -20px;">
         <header th:replace="~{fragments/common::nav}"></header>
 
         <div style="visibility: hidden;" id="page-display">
@@ -84,13 +81,13 @@
 
         <div th:each="currEvent : ${events.events}">
             <div th:if="(${currEvent.category==events.enums[0]} and ${events.filters[0]}) OR
-        (${currEvent.category==events.enums[1]} and ${events.filters[1]}) OR
-        (${currEvent.category==events.enums[2]} and ${events.filters[2]}) OR
-        (${currEvent.category==events.enums[3]} and ${events.filters[3]}) OR
-        (${currEvent.category==events.enums[4]} and ${events.filters[4]}) OR
-        (${currEvent.category==events.enums[5]} and ${events.filters[5]}) OR
-        (${currEvent.category==events.enums[6]} and ${events.filters[6]}) OR
-        (${currEvent.category==events.enums[7]} and ${events.filters[7]}) OR
+        (${currEvent.category.toString()==events.enums[1]} and ${events.filters[1]}) OR
+        (${currEvent.category.toString()==events.enums[2]} and ${events.filters[2]}) OR
+        (${currEvent.category.toString()==events.enums[3]} and ${events.filters[3]}) OR
+        (${currEvent.category.toString()==events.enums[4]} and ${events.filters[4]}) OR
+        (${currEvent.category.toString()==events.enums[5]} and ${events.filters[5]}) OR
+        (${currEvent.category.toString()==events.enums[6]} and ${events.filters[6]}) OR
+        (${currEvent.category.toString()==events.enums[7]} and ${events.filters[7]}) OR
         (${events.filters[8]})" class="event-listing">
                 <div class="container-image">
                     <img th:src="@{/api/event/image(id=${currEvent.id})}" alt="Image">
@@ -104,17 +101,22 @@
                     <p>
                         <span th:text="${currEvent.category}"></span>, added by <span
                             th:text="${currEvent.addedBy.username}"></span>
-                        <a th:if="${@loggedUser.logged and @loggedUser.username!=currEvent.addedBy.username and not @loggedUser.followedUsers.contains(currEvent.addedBy)}"
+                        <a th:if="${@loggedUser.logged and @loggedUser.username!=currEvent.addedBy.username and not @loggedUser.followedUsers.contains(currEvent.addedBy.username)}"
                             th:href="@{/follow/{username}(username=${currEvent.addedBy.username})}"
                             style="background-color: yellow; margin-left: 20px; border-radius: 20px; padding: 10px;">Follow</a>
                     </p>
+                    <p style="display: flex; align-items: center;">
+                        <span th:text="${currEvent.location} + ', ' + ${currEvent.city.name}"> </span>
+                        <img style="width: 50px; height: 50px; margin-left: 10px;" th:src="@{'https://flagsapi.com/' + ${currEvent.country.flag} + '/shiny/64.png'}">
+                    </p>
                     <p>
-                        <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>
+                        <span th:text="${#temporals.format(currEvent.start, 'dd/MM/YY')}"></span> - <span th:text="${#temporals.format(currEvent.end, 'dd/MM/YY')}"></span><br>
+                        <span th:text="${#temporals.format(currEvent.start, 'HH:mm')}"></span> - <span th:text="${#temporals.format(currEvent.end, 'HH:mm')}"></span>
                     </p>
                 </div>
 
                 <div class="buy-section">
-                    <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin}" class="report-btn"
+                    <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin and @loggedUser.username != currEvent.addedBy.username}" class="report-btn"
                         th:id="${currEvent.id + ' report'}" href="javascript:void(0)">🚩 Report</a>
                     <a th:if="${@loggedUser.logged and @loggedUser.isAdmin}"
                         th:href="@{/remove/{id}(id=${currEvent.id})}">❌Delete</a>
@@ -127,6 +129,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("close-btn2").onclick = function (e) { return myHandler(e); };
+    </script>
 
     <footer th:replace="~{fragments/common::footer}"></footer>
 </body>

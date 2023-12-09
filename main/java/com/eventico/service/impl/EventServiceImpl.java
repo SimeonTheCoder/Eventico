@@ -4,11 +4,11 @@ import com.eventico.model.EventViewModel;
 import com.eventico.model.HomeFeedViewModel;
 import com.eventico.model.dto.BrowseSelectionFilterBinding;
 import com.eventico.model.dto.EventAddBinding;
+import com.eventico.model.entity.City;
+import com.eventico.model.entity.Country;
 import com.eventico.model.entity.Event;
 import com.eventico.model.entity.User;
-import com.eventico.repo.EventRepository;
-import com.eventico.repo.ReportRepository;
-import com.eventico.repo.UserRepository;
+import com.eventico.repo.*;
 import com.eventico.service.EventService;
 import com.eventico.service.LoggedUser;
 import org.springframework.stereotype.Service;
@@ -24,21 +24,26 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final ReportRepository reportRepository;
+    private final CountryRepository countryRepository;
+    private final CityRepository cityRepository;
 
     private final LoggedUser loggedUser;
 
     private boolean[] filters = new boolean[9];
 
-    public EventServiceImpl(UserRepository userRepository, EventRepository eventRepository, ReportRepository reportRepository, LoggedUser loggedUser) {
+    public EventServiceImpl(UserRepository userRepository, EventRepository eventRepository, ReportRepository reportRepository, CountryRepository countryRepository, CityRepository cityRepository, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.reportRepository = reportRepository;
+        this.countryRepository = countryRepository;
+        this.cityRepository = cityRepository;
         this.loggedUser = loggedUser;
 
         this.filters[8] = true;
     }
 
     @Override
+    @Transactional
     public boolean addEvent(EventAddBinding binding) {
         if (binding.getStart().isAfter(binding.getEnd())) return false;
 
@@ -49,6 +54,16 @@ public class EventServiceImpl implements EventService {
         event.setCost(binding.getCost());
         event.setCategory(binding.getCategory());
 
+        Country country = countryRepository.findByName(binding.getCountry());
+        City city = cityRepository.findByName(binding.getCity());
+
+        if(country == null || city == null) return false;
+
+        country.getEvents().add(event);
+        city.getEvents().add(event);
+
+        event.setCountry(country);
+        event.setCity(city);
         event.setLocation(binding.getLocation());
         event.setStart(binding.getStart());
         event.setEnd(binding.getEnd());

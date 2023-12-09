@@ -40,8 +40,32 @@ public class Event extends BaseEntity{
     @JoinColumn(name = "added_by_id", nullable = false)
     private User addedBy;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<User> participants;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 
     public Event() {
         participants = new ArrayList<>();

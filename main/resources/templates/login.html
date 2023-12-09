@@ -17,13 +17,21 @@
                     <a th:href="@{/register}">Register</a> if you don't have an account.
                 </p>
 
+                <div th:if="${error}" class="text-danger">
+                    Login failed
+                </div>
+
                 <div class="form-container">
-                    <form th:method="POST" th:action="@{/login}">
+                    <form th:object="${userLoginBindingModel}" th:method="POST" th:action="@{/login}">
                         <label>Username:</label>
-                        <input type="text" name="username">
+                        <input th:field="*{username}" type="text" name="username" th:errorclass="bg-danger">
+                        <br th:if="${#fields.hasErrors('username')}">
+                        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Username error message</small>
 
                         <label>Password:</label>
-                        <input type="password" name="password">
+                        <input th:field="*{password}" type="password" name="password" th:errorclass="bg-danger">
+                        <br th:if="${#fields.hasErrors('password')}">
+                        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Password error message</small>
 
                         <input type="submit" value="Log in" class="btn">
                     </form>

@@ -10,31 +10,62 @@
         Add event
     </h1>
 
-    <form style="box-shadow: #0000003d 0px 0px 200px 0px;" th:method="POST" th:action="@{/add-event}" enctype="multipart/form-data">
+    <div style="margin-left: 20px;" th:if="${error}" class="text-danger">
+        Cannot add event
+    </div>
+
+    <form style="box-shadow: #0000003d 0px 0px 200px 0px;" th:object="${eventAddBindingModel}" th:method="POST" th:action="@{/add-event}" enctype="multipart/form-data">
         <label>Event name:</label>
-        <input type="text" id="name" name="name">
+        <input th:field="*{name}" type="text" id="name" name="name" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('name')}">
+        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Username error message</small>
 
         <label>Event description:</label>
-        <input type="text" id="description" name="description">
+        <input th:field="*{description}" type="text" id="description" name="description" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('description')}">
+        <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Username error message</small>
 
         <label>Event cost:</label>
-        <input type="text" id="cost" name="cost">
+        <input th:field="*{cost}" type="text" id="cost" name="cost" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('cost')}">
+        <small th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" class="text-danger">Username error message</small>
 
         <label>Start: </label>
-        <input type="datetime-local" id="start" name="start">
+        <input th:field="*{start}" type="datetime-local" id="start" name="start" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('start')}">
+        <small th:if="${#fields.hasErrors('start')}" th:errors="*{start}" class="text-danger">Username error message</small>
 
         <label>End: </label>
-        <input type="datetime-local" id="end" name="end">
+        <input th:field="*{end}" type="datetime-local" id="end" name="end" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('end')}">
+        <small th:if="${#fields.hasErrors('end')}" th:errors="*{end}" class="text-danger">Username error message</small>
 
         <label>Event image: </label>
-        <input type="file" id="myFile" name="filename">
+        <input th:field="*{filename}" type="file" id="myFile" name="filename" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('filename')}">
+        <small th:if="${#fields.hasErrors('filename')}" th:errors="*{filename}" class="text-danger">Username error message</small>
+
+        <label>Event country:</label>
+        <select th:field="*{country}" id="country" name="country" th:errorclass="bg-danger">
+            <option th:each="country : ${data.countries}" th:value="${country.name}"><span th:text="${country.name}"></span></option>
+        </select>
+        <br th:if="${#fields.hasErrors('country')}">
+        <small th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger">Username error message</small>
+
+        <label>Event city:</label>
+        <select th:field="*{city}" id="city" name="city" th:errorclass="bg-danger">
+            <option th:each="city : ${data.cities}" th:value="${city.name}"><span th:text="${city.name}"></span></option>
+        </select>
+        <br th:if="${#fields.hasErrors('city')}">
+        <small th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger">Username error message</small>
 
         <label>Event location: </label>
-        <input type="text" id="text" name="location">
+        <input th:field="*{location}" type="text" id="text" name="location" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('location')}">
+        <small th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger">Username error message</small>
 
         <label>Event category:</label>
-        <select id="category" name="category">
-            <option value="">Select category</option>
+        <select th:field="*{category}" id="category" name="category" th:errorclass="bg-danger">
             <option value="SPORT">SPORT</option>
             <option value="MUSIC">MUSIC</option>
             <option value="THEATRE">THEATRE</option>
@@ -45,6 +76,8 @@
             <option value="MUSEUMS">MUSEUMS</option>,
             <option value="COMPETITION">COMPETITION</option>
         </select>
+        <br th:if="${#fields.hasErrors('category')}">
+        <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger">Username error message</small>
 
         <input type="submit" value="Add event!" class="btn">
     </form>

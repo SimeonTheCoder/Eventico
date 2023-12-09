@@ -31,7 +31,8 @@
                         <span th:text="${currEvent.category}"></span>
                     </p>
                     <p>
-                        <span th:text="${currEvent.start}"></span> - <span th:text="${currEvent.end}"></span>
+                        <span th:text="${#temporals.format(currEvent.start, 'dd/MM/YY')}"></span> - <span th:text="${#temporals.format(currEvent.end, 'dd/MM/YY')}"></span><br>
+                        <span th:text="${#temporals.format(currEvent.start, 'HH:mm')}"></span> - <span th:text="${#temporals.format(currEvent.end, 'HH:mm')}"></span>
                     </p>
                 </div>
 

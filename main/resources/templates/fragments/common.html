@@ -15,9 +15,11 @@
 <body>
     <header>
         <nav>
+            <script src="scripts/themes.js"></script>
             <div style="color: yellow; font-weight: 900; font-size: 25px;">
                 <a th:unless="${@loggedUser.logged}" th:href="@{/}" style="color: yellow; font-weight: 900; font-size: 25px;">Eventico</a>
                 <a th:if="${@loggedUser.logged}" th:href="@{/home}" style="color: yellow; font-weight: 900; font-size: 25px;">Eventico</a>
+                <button style="display: inline; background: none; border: none;" class="btn-toggle">🌙</button>  
             </div>
 
             <div>

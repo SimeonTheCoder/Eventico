@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserRegisterBinding {
@@ -15,19 +16,25 @@ public class UserRegisterBinding {
     @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     private String username;
 
+    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     @Column(nullable = false)
     private String password;
 
+    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     @Column(nullable = false)
     private String repeat;
 
     @Email
+    @NotBlank(message = "Email must not be blank!")
     @Column(unique = true, nullable = false)
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRoles role;
+
+    @Column(nullable = false)
+    private String country;
 
     public UserRegisterBinding(UserService userService) {
         this.userService = userService;
@@ -75,5 +82,13 @@ public class UserRegisterBinding {
 
     public void setRepeat(String repeat) {
         this.repeat = repeat;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

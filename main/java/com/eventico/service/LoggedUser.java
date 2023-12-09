@@ -1,5 +1,6 @@
 package com.eventico.service;
 
+import com.eventico.model.entity.Country;
 import com.eventico.model.entity.User;
 import com.eventico.model.enums.UserRoles;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,8 @@ public class LoggedUser {
     private boolean isAdmin;
     private List<Long> eventsParticipation;
     private List<String> followedUsers;
+
+    private Country country;
 
     public LoggedUser() {
         isLogged = false;
@@ -63,12 +66,15 @@ public class LoggedUser {
             eventsParticipation.add(e.getId());
         });
 
+        this.country = user.getCountry();
+
         this.isAdmin = (user.getRole() == UserRoles.ADMIN);
         this.isCreator = (user.getRole() == UserRoles.CREATOR) || this.isAdmin;
     }
 
     public void logout() {
         this.username = null;
+        this.country = null;
 
         this.isLogged = false;
         this.isCreator = false;
