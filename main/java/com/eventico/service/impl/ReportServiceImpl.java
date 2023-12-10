@@ -61,6 +61,9 @@ public class ReportServiceImpl implements ReportService {
     @Override
     @Transactional
     public boolean approveReport(Long id) {
+        if(!loggedUser.isLogged()) return false;
+        if(!loggedUser.isAdmin()) return false;
+
         Report report = reportRepository.findById(id).orElse(null);
         if(report == null) return false;
 

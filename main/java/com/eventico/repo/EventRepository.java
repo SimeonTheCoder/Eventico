@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
+    Event findByName(String name);
     @Transactional
     @Modifying
     @Query("update Event e set e.participants = ?1 where e.id = ?2")

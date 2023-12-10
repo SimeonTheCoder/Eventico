@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService {
         if(!binding.getPassword().equals(binding.getRepeat())) return false;
         if(userRepository.findByUsername(binding.getUsername()) != null) return false;
 
+        if(binding.getUsername().length() < 3 || binding.getUsername().length() > 20) return false;
+        if(binding.getPassword().length() < 3 || binding.getPassword().length() > 20) return false;
+
         User user = new User();
 
         user.setUsername(binding.getUsername());
